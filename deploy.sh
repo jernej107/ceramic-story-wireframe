@@ -9,8 +9,8 @@ echo "🏺 TFstudio Ceramic Website - Kirby CMS Deployment"
 echo "=================================================="
 
 # Configuration
-KIRBY_ROOT="/var/www/html"  # Change this to your Kirby installation path
-PROJECT_ROOT="$(pwd)"
+KIRBY_ROOT="/srv/tfstudio/app"  # Change this to your Kirby installation path
+PROJECT_ROOT="/srv/tfstudio/git_app"
 BACKUP_DIR="${KIRBY_ROOT}/backup-$(date +%Y%m%d-%H%M%S)"
 
 # Colors for output
