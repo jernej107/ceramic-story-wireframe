@@ -3,7 +3,7 @@
 <!-- Hero Section -->
 <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
   <!-- Background Image -->
-  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('<?= $site->heroImage()->toFile()?->url() ?? 'assets/images/hero-ceramics.jpg' ?>')">
+  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('/assets/images/hero-ceramics.jpg')">
     <div class="absolute inset-0 bg-foreground/20"></div>
   </div>
 
@@ -52,19 +52,52 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      <?php foreach($page->collections()->toStructure() as $collection): ?>
-      <div class="group cursor-pointer">
-        <div class="aspect-[4/3] bg-cover bg-center rounded-lg mb-4 transition-transform group-hover:scale-105" style="background-image: url('<?= $collection->image()->toFile()?->url() ?>')"></div>
-        <div class="flex items-center justify-between">
-          <h3 class="text-lg font-semibold text-primary-foreground uppercase tracking-wide">
-            <?= $collection->name() ?>
-          </h3>
-          <svg class="w-4 h-4 text-primary-foreground group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7"></path>
-          </svg>
+      <?php 
+      $collections = $page->collections()->toStructure();
+      if ($collections->count() > 0): 
+        foreach($collections as $collection): ?>
+          <div class="group cursor-pointer">
+            <div class="aspect-[4/3] bg-cover bg-center rounded-lg mb-4 transition-transform group-hover:scale-105" style="background-image: url('/assets/images/<?= $collection->imagename() ?>')"></div>
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold text-primary-foreground uppercase tracking-wide">
+                <?= $collection->name() ?>
+              </h3>
+              <svg class="w-4 h-4 text-primary-foreground group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+        <?php endforeach;
+      else: ?>
+        <!-- Default collections if no content is set -->
+        <div class="group cursor-pointer">
+          <div class="aspect-[4/3] bg-cover bg-center rounded-lg mb-4 transition-transform group-hover:scale-105" style="background-image: url('/assets/images/ceramic-collection-1.jpg')"></div>
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-primary-foreground uppercase tracking-wide">TABLEWARE</h3>
+            <svg class="w-4 h-4 text-primary-foreground group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7"></path>
+            </svg>
+          </div>
         </div>
-      </div>
-      <?php endforeach ?>
+        <div class="group cursor-pointer">
+          <div class="aspect-[4/3] bg-cover bg-center rounded-lg mb-4 transition-transform group-hover:scale-105" style="background-image: url('/assets/images/ceramic-collection-2.jpg')"></div>
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-primary-foreground uppercase tracking-wide">DECORATIVE</h3>
+            <svg class="w-4 h-4 text-primary-foreground group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="aspect-[4/3] bg-cover bg-center rounded-lg mb-4 transition-transform group-hover:scale-105" style="background-image: url('/assets/images/ceramic-collection-3.jpg')"></div>
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-primary-foreground uppercase tracking-wide">GARDEN</h3>
+            <svg class="w-4 h-4 text-primary-foreground group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7"></path>
+            </svg>
+          </div>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
 </section>
@@ -82,24 +115,78 @@
     </div>
     
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      <?php foreach($page->journalPosts()->toStructure()->limit(3) as $post): ?>
-      <article class="group ceramic-transition hover:scale-105">
-        <div class="aspect-[4/3] bg-cover bg-center rounded-lg mb-4 soft-shadow" style="background-image: url('<?= $post->image()->toFile()?->url() ?>')"></div>
-        <div class="space-y-3">
-          <span class="text-sm text-primary font-medium uppercase tracking-wide"><?= $post->category() ?></span>
-          <h3 class="text-xl font-semibold text-foreground group-hover:text-primary ceramic-transition">
-            <?= $post->title() ?>
-          </h3>
-          <p class="text-muted-foreground leading-relaxed">
-            <?= $post->excerpt() ?>
-          </p>
-          <div class="flex items-center justify-between pt-2">
-            <time class="text-sm text-muted-foreground"><?= $post->date()->toDate('F j, Y') ?></time>
-            <span class="text-primary font-medium text-sm group-hover:underline">Read More</span>
+      <?php 
+      $posts = $page->journalPosts()->toStructure()->limit(3);
+      if ($posts->count() > 0):
+        foreach($posts as $post): ?>
+          <article class="group ceramic-transition hover:scale-105">
+            <div class="aspect-[4/3] bg-cover bg-center rounded-lg mb-4 soft-shadow" style="background-image: url('/assets/images/<?= $post->imagename() ?>')"></div>
+            <div class="space-y-3">
+              <span class="text-sm text-primary font-medium uppercase tracking-wide"><?= $post->category() ?></span>
+              <h3 class="text-xl font-semibold text-foreground group-hover:text-primary ceramic-transition">
+                <?= $post->title() ?>
+              </h3>
+              <p class="text-muted-foreground leading-relaxed">
+                <?= $post->excerpt() ?>
+              </p>
+              <div class="flex items-center justify-between pt-2">
+                <time class="text-sm text-muted-foreground"><?= $post->date()->toDate('F j, Y') ?></time>
+                <span class="text-primary font-medium text-sm group-hover:underline">Read More</span>
+              </div>
+            </div>
+          </article>
+        <?php endforeach;
+      else: ?>
+        <!-- Default journal posts if no content is set -->
+        <article class="group ceramic-transition hover:scale-105">
+          <div class="aspect-[4/3] bg-cover bg-center rounded-lg mb-4 soft-shadow" style="background-image: url('/assets/images/featured-ceramics.jpg')"></div>
+          <div class="space-y-3">
+            <span class="text-sm text-primary font-medium uppercase tracking-wide">PROCESS</span>
+            <h3 class="text-xl font-semibold text-foreground group-hover:text-primary ceramic-transition">
+              The Art of Glazing
+            </h3>
+            <p class="text-muted-foreground leading-relaxed">
+              Exploring the delicate balance between chemistry and artistry in our glazing process.
+            </p>
+            <div class="flex items-center justify-between pt-2">
+              <time class="text-sm text-muted-foreground">March 15, 2024</time>
+              <span class="text-primary font-medium text-sm group-hover:underline">Read More</span>
+            </div>
           </div>
-        </div>
-      </article>
-      <?php endforeach ?>
+        </article>
+        <article class="group ceramic-transition hover:scale-105">
+          <div class="aspect-[4/3] bg-cover bg-center rounded-lg mb-4 soft-shadow" style="background-image: url('/assets/images/ceramic-process.jpg')"></div>
+          <div class="space-y-3">
+            <span class="text-sm text-primary font-medium uppercase tracking-wide">DESIGN</span>
+            <h3 class="text-xl font-semibold text-foreground group-hover:text-primary ceramic-transition">
+              Finding Beauty in Imperfection
+            </h3>
+            <p class="text-muted-foreground leading-relaxed">
+              How traditional Japanese aesthetics influence our contemporary ceramic designs.
+            </p>
+            <div class="flex items-center justify-between pt-2">
+              <time class="text-sm text-muted-foreground">March 10, 2024</time>
+              <span class="text-primary font-medium text-sm group-hover:underline">Read More</span>
+            </div>
+          </div>
+        </article>
+        <article class="group ceramic-transition hover:scale-105">
+          <div class="aspect-[4/3] bg-cover bg-center rounded-lg mb-4 soft-shadow" style="background-image: url('/assets/images/second-chance-ceramics.jpg')"></div>
+          <div class="space-y-3">
+            <span class="text-sm text-primary font-medium uppercase tracking-wide">SUSTAINABILITY</span>
+            <h3 class="text-xl font-semibold text-foreground group-hover:text-primary ceramic-transition">
+              Sustainable Ceramic Practices
+            </h3>
+            <p class="text-muted-foreground leading-relaxed">
+              Our commitment to eco-friendly materials and processes in ceramic creation.
+            </p>
+            <div class="flex items-center justify-between pt-2">
+              <time class="text-sm text-muted-foreground">March 5, 2024</time>
+              <span class="text-primary font-medium text-sm group-hover:underline">Read More</span>
+            </div>
+          </div>
+        </article>
+      <?php endif; ?>
     </div>
   </div>
 </section>
@@ -135,7 +222,7 @@
       </div>
       
       <div class="order-first lg:order-last">
-        <div class="aspect-[4/3] bg-cover bg-center rounded-lg ceramic-shadow" style="background-image: url('<?= $page->aboutImage()->toFile()?->url() ?? 'assets/images/ceramic-process.jpg' ?>'"></div>
+        <div class="aspect-[4/3] bg-cover bg-center rounded-lg ceramic-shadow" style="background-image: url('/assets/images/<?= $page->aboutImagename()->or('ceramic-process.jpg') ?>')"></div>
       </div>
     </div>
   </div>
@@ -145,7 +232,7 @@
 <section id="second-chance" class="py-16 sm:py-20 ceramic-gradient">
   <div class="container mx-auto px-4">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-      <div class="aspect-[4/3] bg-cover bg-center rounded-lg soft-shadow" style="background-image: url('<?= $page->secondChanceImage()->toFile()?->url() ?? 'assets/images/second-chance-ceramics.jpg' ?>')"></div>
+      <div class="aspect-[4/3] bg-cover bg-center rounded-lg soft-shadow" style="background-image: url('/assets/images/<?= $page->secondChanceImagename()->or('second-chance-ceramics.jpg') ?>')"></div>
       
       <div class="space-y-6">
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">

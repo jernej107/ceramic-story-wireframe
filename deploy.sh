@@ -118,15 +118,136 @@ else
     print_error "styles.css not found"
 fi
 
-# Step 6: Copy images
-echo "🖼️  Step 6: Copying ceramic images..."
+# Step 6: Copy images and create default content
+echo "🖼️  Step 6: Copying ceramic images and creating content..."
+
+# Create content directory structure
+mkdir -p "$KIRBY_ROOT/content/home"
+chown -R 82:82 "$KIRBY_ROOT/content"
+
 if [ -d "$PROJECT_ROOT/src/assets" ]; then
-    # Copy all ceramic images
+    # Copy all ceramic images to assets
     find "$PROJECT_ROOT/src/assets" -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" | while read img; do
         filename=$(basename "$img")
         cp "$img" "$KIRBY_ROOT/assets/images/"
         print_status "Copied image: $filename"
     done
+    
+    # Create default home page content with proper image references
+    cat > "$KIRBY_ROOT/content/home/home.txt" << 'EOF'
+Title: TFstudio - Handcrafted Ceramic Art
+
+----
+
+Herotitle: Handcrafted
+
+----
+
+Herosubtitle: Ceramic Art
+
+----
+
+Herodescription: Discover unique, artisan-made ceramics that bring warmth and character to your home. Each piece tells a story of craftsmanship and creativity.
+
+----
+
+Collectionstitle: NEW COLLECTIONS
+
+----
+
+Collectionsdescription: Discover exclusive ceramic collections, created with love and attention to detail. Each piece is a work of art that adds individuality to your home.
+
+----
+
+Collections: 
+
+- 
+  name: Tableware
+  imagename: ceramic-collection-1.jpg
+- 
+  name: Decorative
+  imagename: ceramic-collection-2.jpg
+- 
+  name: Garden
+  imagename: ceramic-collection-3.jpg
+
+----
+
+Journaltitle: Ceramic Journal
+
+----
+
+Journaldescription: Insights into our ceramic process, inspiration, and the stories behind each unique piece.
+
+----
+
+Journalposts: 
+
+- 
+  title: The Art of Glazing
+  excerpt: Exploring the delicate balance between chemistry and artistry in our glazing process.
+  category: Process
+  date: 2024-03-15
+  imagename: featured-ceramics.jpg
+- 
+  title: Finding Beauty in Imperfection
+  excerpt: How traditional Japanese aesthetics influence our contemporary ceramic designs.
+  category: Design
+  date: 2024-03-10
+  imagename: ceramic-process.jpg
+- 
+  title: Sustainable Ceramic Practices
+  excerpt: Our commitment to eco-friendly materials and processes in ceramic creation.
+  category: Sustainability
+  date: 2024-03-05
+  imagename: second-chance-ceramics.jpg
+
+----
+
+Abouttitle: Our Ceramic Story
+
+----
+
+Aboutdescription: Founded with a passion for handcrafted ceramics, TFstudio creates unique pieces that blend traditional techniques with contemporary design. Each piece is carefully crafted to bring warmth and character to your everyday moments.
+
+----
+
+Aboutimagename: ceramic-process.jpg
+
+----
+
+Yearsexperience: 8+
+
+----
+
+Piecescreated: 500+
+
+----
+
+Happycustomers: 200+
+
+----
+
+Secondchancetitle: Second Chance Ceramics
+
+----
+
+Secondchancedescription: Every ceramic piece has its own journey. Our Second Chance collection celebrates the beauty in imperfection - pieces with unique characteristics, slight variations, or one-of-a-kind features that make them special.
+
+----
+
+Secondchanceimagename: second-chance-ceramics.jpg
+
+----
+
+Metadescription: Discover unique, artisan-made ceramics. Each piece tells a story of craftsmanship and creativity.
+
+----
+
+Metakeywords: ceramic art, handcrafted pottery, artisan ceramics, TFstudio
+
+EOF
+    print_status "Created default homepage content"
 else
     print_warning "Source assets directory not found"
 fi
