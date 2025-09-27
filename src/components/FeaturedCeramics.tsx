@@ -21,14 +21,14 @@ const FeaturedCeramics = () => {
   ];
 
   return (
-    <section id="featured" className="py-20 bg-primary">
+    <section id="featured" className="py-16 sm:py-20 bg-primary">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-start mb-16">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8 mb-12 sm:mb-16">
           <div className="max-w-2xl">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-primary-foreground">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-primary-foreground">
               NEW COLLECTIONS
             </h2>
-            <p className="text-xl text-primary-foreground/90 leading-relaxed">
+            <p className="text-lg sm:text-xl text-primary-foreground/90 leading-relaxed">
               Discover exclusive ceramic collections, created with love and attention to detail. 
               Each piece is a work of art that adds individuality to your home.
             </p>
@@ -37,14 +37,14 @@ const FeaturedCeramics = () => {
             href="https://shop.tfstudio.website" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-primary-foreground hover:text-primary-foreground/80 transition-colors group"
+            className="flex items-center gap-2 text-primary-foreground hover:text-primary-foreground/80 transition-colors group lg:flex-shrink-0 self-start"
           >
-            <span className="text-lg font-medium">View All Collections</span>
+            <span className="text-lg font-medium whitespace-nowrap">View All Collections</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {collections.map((collection, index) => (
             <div key={index} className="group cursor-pointer">
               <div 
