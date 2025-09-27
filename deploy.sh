@@ -74,6 +74,13 @@ mkdir -p "$KIRBY_ROOT/assets/css"
 mkdir -p "$KIRBY_ROOT/assets/images"
 mkdir -p "$KIRBY_ROOT/assets/js"
 print_status "Directory structure created"
+chown -R 82:82 "$KIRBY_ROOT/site/templates"
+chown -R 82:82 "$KIRBY_ROOT/site/snippets"
+chown -R 82:82 "$KIRBY_ROOT/site/blueprints"
+chown -R 82:82 "$KIRBY_ROOT/assets/css"
+chown -R 82:82 "$KIRBY_ROOT/assets/images"
+chown -R 82:82 "$KIRBY_ROOT/assets/js"
+print_status "Permissions changed for created directories"
 
 # Step 4: Copy Kirby templates and snippets
 echo "📄 Step 4: Copying Kirby templates and snippets..."
@@ -301,59 +308,6 @@ find "$KIRBY_ROOT" -type f -exec chmod 644 {} \;
 find "$KIRBY_ROOT" -type d -exec chmod 755 {} \;
 print_status "File permissions set"
 
-# Step 10: Create .htaccess for clean URLs (if Apache)
-if [ ! -f "$KIRBY_ROOT/.htaccess" ]; then
-    echo "🌐 Step 10: Creating .htaccess for clean URLs..."
-    cat > "$KIRBY_ROOT/.htaccess" << 'EOF'
-# Kirby .htaccess
-
-# rewrite rules
-<IfModule mod_rewrite.c>
-
-# enable awesome urls. i.e.:
-# http://yourdomain.com/about-us/team
-RewriteEngine on
-
-# make sure to set the RewriteBase correctly
-# if you are running the site in a subfolder;
-# otherwise links or the entire site will break.
-#
-# If your homepage is http://yourdomain.com/mysite,
-# set the RewriteBase to:
-#
-# RewriteBase /mysite
-
-# In some environments it's necessary to
-# set the RewriteBase to:
-#
-# RewriteBase /
-
-# block files and folders beginning with a dot, such as .git
-# except for the .well-known folder, which is used for Let's Encrypt and security.txt
-RewriteRule (^|/)\.(?!well-known\/) index.php [L]
-
-# block all files in the content folder from being accessed directly
-RewriteRule ^content/(.*) index.php [L]
-
-# block all files in the site folder from being accessed directly
-RewriteRule ^site/(.*) index.php [L]
-
-# block direct access to Kirby and the Panel sources
-RewriteRule ^kirby/(.*) index.php [L]
-
-# make site links work
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*) index.php [L,QSA]
-
-</IfModule>
-
-# Additional recommended rules can be found in:
-# https://getkirby.com/docs/guide/configuration#custom-folder-setup__htaccess
-EOF
-    print_status "Created .htaccess file"
-fi
-
 echo ""
 echo "🎉 Deployment completed successfully!"
 echo "=================================================="
@@ -365,4 +319,3 @@ echo "   2. Login and configure your content"
 echo "   3. Upload your ceramic images through the panel"
 echo "   4. Test the website functionality"
 echo ""
-echo "📖 For detailed configuration, see: kirby-implementation-guide.md"
