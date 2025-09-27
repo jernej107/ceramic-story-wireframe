@@ -1,75 +1,64 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import featuredImage from "@/assets/featured-ceramics.jpg";
+import { ArrowRight } from "lucide-react";
+import collection1 from "@/assets/ceramic-collection-1.jpg";
+import collection2 from "@/assets/ceramic-collection-2.jpg";
+import collection3 from "@/assets/ceramic-collection-3.jpg";
 
 const FeaturedCeramics = () => {
-  const featuredItems = [
+  const collections = [
     {
-      name: "Terra Collection Vase",
-      description: "Handcrafted terracotta vase with organic texture",
-      price: "$89",
-      image: featuredImage,
+      name: "Morning Collection",
+      image: collection1,
     },
     {
-      name: "Artisan Bowl Set",
-      description: "Three-piece ceramic bowl set in cream glaze",
-      price: "$125",
-      image: featuredImage,
+      name: "Heart of Home",
+      image: collection2,
     },
     {
-      name: "Studio Mug Series",
-      description: "Daily ceramic mugs with unique character",
-      price: "$45",
-      image: featuredImage,
+      name: "Natural Beauty",
+      image: collection3,
     },
   ];
 
   return (
-    <section id="featured" className="py-20 subtle-gradient">
+    <section id="featured" className="py-20 bg-primary">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            Featured Ceramics
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Discover our handpicked selection of ceramic pieces, each uniquely crafted 
-            with passion and attention to detail.
-          </p>
+        <div className="flex justify-between items-start mb-16">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-primary-foreground">
+              NEW COLLECTIONS
+            </h2>
+            <p className="text-xl text-primary-foreground/90 leading-relaxed">
+              Discover exclusive ceramic collections, created with love and attention to detail. 
+              Each piece is a work of art that adds individuality to your home.
+            </p>
+          </div>
+          <a 
+            href="https://shop.tfstudio.website" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-primary-foreground hover:text-primary-foreground/80 transition-colors group"
+          >
+            <span className="text-lg font-medium">View All Collections</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {featuredItems.map((item, index) => (
-            <Card key={index} className="group hover:scale-105 ceramic-transition ceramic-shadow border-0 bg-card/80 backdrop-blur">
-              <CardHeader className="pb-4">
-                <div 
-                  className="aspect-square bg-cover bg-center rounded-lg mb-4"
-                  style={{ backgroundImage: `url(${item.image})` }}
-                />
-                <CardTitle className="text-xl font-semibold text-card-foreground">
-                  {item.name}
-                </CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  {item.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold text-primary">{item.price}</span>
-                  <Button size="sm" variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground ceramic-transition">
-                    View Details
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {collections.map((collection, index) => (
+            <div key={index} className="group cursor-pointer">
+              <div 
+                className="aspect-[4/3] bg-cover bg-center rounded-lg mb-4 transition-transform group-hover:scale-105"
+                style={{ backgroundImage: `url(${collection.image})` }}
+              />
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-primary-foreground uppercase tracking-wide">
+                  {collection.name}
+                </h3>
+                <ArrowRight className="w-4 h-4 text-primary-foreground group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
           ))}
-        </div>
-
-        <div className="text-center">
-          <Button asChild size="lg" variant="default" className="ceramic-shadow">
-            <a href="https://shop.tfstudio.website" target="_blank" rel="noopener noreferrer">
-              View Full Collection
-            </a>
-          </Button>
         </div>
       </div>
     </section>
