@@ -18,8 +18,8 @@ All colors MUST be HSL.
     --popover: 27 31% 92%;
     --popover-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
 
-    /* Bright Lime Primary for CTAs */
-    --primary: 73 100% 50%; /* cbff01 - High-impact accent */
+    /* Sage Primary */
+    --primary: 49 11% 60%; /* a39f8e - Sage as primary */
     --primary-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
 
     /* Sage Secondary */
@@ -42,12 +42,12 @@ All colors MUST be HSL.
 
     --border: 49 11% 80%;
     --input: 49 11% 80%;
-    --ring: 73 100% 50%;
+    --ring: 49 11% 60%;
 
     --radius: 0.75rem;
 
     /* Updated Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(73 100% 50%), hsl(49 11% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(49 11% 60%), hsl(18 62% 75%));
     --gradient-subtle: linear-gradient(180deg, hsl(27 31% 92%), hsl(18 62% 75%));
     --gradient-ceramic: linear-gradient(45deg, hsl(18 62% 75%), hsl(49 11% 60%));
 
@@ -64,12 +64,12 @@ All colors MUST be HSL.
 
     --sidebar-background: 27 31% 95%;
     --sidebar-foreground: 60 4% 11%;
-    --sidebar-primary: 73 100% 50%;
+    --sidebar-primary: 49 11% 60%;
     --sidebar-primary-foreground: 60 4% 11%;
     --sidebar-accent: 49 11% 65%;
     --sidebar-accent-foreground: 60 4% 11%;
     --sidebar-border: 49 11% 80%;
-    --sidebar-ring: 73 100% 50%;
+    --sidebar-ring: 49 11% 60%;
   }
 
   .dark {
@@ -82,8 +82,8 @@ All colors MUST be HSL.
     --popover: 60 4% 12%;
     --popover-foreground: 27 31% 95%;
 
-    --primary: 73 100% 55%;
-    --primary-foreground: 60 4% 11%;
+    --primary: 49 11% 40%;
+    --primary-foreground: 27 31% 95%;
 
     --secondary: 49 11% 25%;
     --secondary-foreground: 27 31% 90%;
@@ -102,9 +102,9 @@ All colors MUST be HSL.
 
     --border: 60 4% 18%;
     --input: 60 4% 18%;
-    --ring: 73 100% 55%;
+    --ring: 49 11% 40%;
 
-    --gradient-hero: linear-gradient(135deg, hsl(73 100% 55%), hsl(49 11% 35%));
+    --gradient-hero: linear-gradient(135deg, hsl(49 11% 40%), hsl(18 62% 35%));
     --gradient-subtle: linear-gradient(180deg, hsl(60 4% 8%), hsl(18 62% 35%));
     --gradient-ceramic: linear-gradient(45deg, hsl(18 62% 35%), hsl(49 11% 25%));
 
@@ -113,12 +113,12 @@ All colors MUST be HSL.
 
     --sidebar-background: 60 4% 10%;
     --sidebar-foreground: 27 31% 90%;
-    --sidebar-primary: 73 100% 55%;
-    --sidebar-primary-foreground: 60 4% 11%;
+    --sidebar-primary: 49 11% 40%;
+    --sidebar-primary-foreground: 27 31% 95%;
     --sidebar-accent: 49 11% 25%;
     --sidebar-accent-foreground: 27 31% 90%;
     --sidebar-border: 60 4% 18%;
-    --sidebar-ring: 73 100% 55%;
+    --sidebar-ring: 49 11% 40%;
   }
 }
 
