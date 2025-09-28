@@ -59,10 +59,9 @@ export default {
         },
       },
       fontFamily: {
-        'poppins': ['Poppins', 'sans-serif'],
-        'inter': ['Inter', 'sans-serif'],
-        'display': ['Poppins', 'sans-serif'],
-        'body': ['Inter', 'sans-serif'],
+        'bricolage': ['Bricolage Grotesque', 'sans-serif'],
+        'display': ['Bricolage Grotesque', 'sans-serif'],
+        'body': ['Bricolage Grotesque', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

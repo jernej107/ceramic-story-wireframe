@@ -59,8 +59,8 @@ All colors MUST be HSL.
     --transition-ceramic: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Typography */
-    --font-display: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
 
     --sidebar-background: 27 31% 95%;
     --sidebar-foreground: 60 4% 11%;
