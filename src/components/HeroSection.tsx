@@ -19,7 +19,7 @@ const HeroSection = () => {
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
               Handcrafted
-              <span className="block hero-gradient bg-clip-text text-transparent">
+              <span className="block text-white">
                 Ceramic Art
               </span>
             </h1>
@@ -49,7 +49,7 @@ const HeroSection = () => {
             <div className="text-left">
               <h1 className="text-4xl xl:text-7xl font-bold mb-6 leading-tight text-foreground">
                 Handcrafted
-                <span className="block hero-gradient bg-clip-text text-transparent">
+                <span className="block text-foreground">
                   Ceramic Art
                 </span>
               </h1>
