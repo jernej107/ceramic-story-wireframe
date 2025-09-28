@@ -59,7 +59,7 @@ All colors MUST be HSL.
     --transition-ceramic: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Typography */
-    --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
     --sidebar-background: 35 25% 97%;

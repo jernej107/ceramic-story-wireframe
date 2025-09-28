@@ -11,7 +11,7 @@ const Navigation = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold text-primary">TFstudio</h1>
+            <h1 className="text-2xl font-bold text-primary font-display">TFstudio</h1>
           </div>
 
           {/* Desktop Navigation */}
