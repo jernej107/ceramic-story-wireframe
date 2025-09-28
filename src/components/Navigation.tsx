@@ -12,7 +12,6 @@ const Navigation = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <h1 className="text-2xl font-bold text-primary">TFstudio</h1>
-            <span className="text-sm text-muted-foreground hidden sm:block">ceramic art</span>
           </div>
 
           {/* Desktop Navigation */}
