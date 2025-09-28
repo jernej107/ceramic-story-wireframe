@@ -33,6 +33,10 @@ All colors MUST be HSL.
     --accent: 25 40% 85%;
     --accent-foreground: 25 15% 25%;
 
+    /* Collections Background */
+    --collections: 45 93% 59%;
+    --collections-foreground: 25 15% 15%;
+
     --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 100%;
 

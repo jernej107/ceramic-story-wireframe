@@ -21,14 +21,14 @@ const FeaturedCeramics = () => {
   ];
 
   return (
-    <section id="featured" className="py-16 sm:py-20 bg-primary">
+    <section id="featured" className="py-16 sm:py-20" style={{ backgroundColor: 'hsl(var(--collections))' }}>
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8 mb-12 sm:mb-16">
           <div className="max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-primary-foreground">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6" style={{ color: 'hsl(var(--collections-foreground))' }}>
               NEW COLLECTIONS
             </h2>
-            <p className="text-lg sm:text-xl text-primary-foreground/90 leading-relaxed">
+            <p className="text-lg sm:text-xl leading-relaxed" style={{ color: 'hsl(var(--collections-foreground) / 0.9)' }}>
               Discover exclusive ceramic collections, created with love and attention to detail. 
               Each piece is a work of art that adds individuality to your home.
             </p>
@@ -37,7 +37,8 @@ const FeaturedCeramics = () => {
             href="https://shop.tfstudio.website" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-primary-foreground hover:text-primary-foreground/80 transition-colors group lg:flex-shrink-0 self-start"
+            className="flex items-center gap-2 transition-colors group lg:flex-shrink-0 self-start"
+            style={{ color: 'hsl(var(--collections-foreground))' }}
           >
             <span className="text-lg font-medium whitespace-nowrap">View All Collections</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -52,10 +53,10 @@ const FeaturedCeramics = () => {
                 style={{ backgroundImage: `url(${collection.image})` }}
               />
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-primary-foreground uppercase tracking-wide">
+                <h3 className="text-lg font-semibold uppercase tracking-wide" style={{ color: 'hsl(var(--collections-foreground))' }}>
                   {collection.name}
                 </h3>
-                <ArrowRight className="w-4 h-4 text-primary-foreground group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" style={{ color: 'hsl(var(--collections-foreground))' }} />
               </div>
             </div>
           ))}
