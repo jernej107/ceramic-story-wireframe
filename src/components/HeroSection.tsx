@@ -3,43 +3,83 @@ import heroImage from "@/assets/hero-ceramics.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="min-h-screen bg-background flex items-center">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-screen">
-          {/* Text Content - Left Side */}
-          <div className="text-left order-2 lg:order-1">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight text-foreground">
+    <>
+      {/* Mobile Version - Image Background with Overlay */}
+      <section className="lg:hidden relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        >
+          <div className="absolute inset-0 bg-foreground/20"></div>
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 container mx-auto px-4 text-center text-white">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
               Handcrafted
               <span className="block hero-gradient bg-clip-text text-transparent">
                 Ceramic Art
               </span>
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl mb-8 leading-relaxed text-foreground/80">
+            <p className="text-lg sm:text-xl mb-8 max-w-2xl mx-auto leading-relaxed text-white/90">
               Discover unique, artisan-made ceramics that bring warmth and character to your home. 
               Each piece tells a story of craftsmanship and creativity.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col gap-4 justify-center items-center">
               <Button asChild size="lg" variant="default" className="ceramic-shadow text-lg px-8 py-4 min-w-[200px]">
                 <a href="#featured">Explore Collection</a>
               </Button>
-              <Button asChild size="lg" variant="outline" className="text-lg px-8 py-4 min-w-[200px]">
+              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-foreground text-lg px-8 py-4 min-w-[200px]">
                 <a href="https://shop.tfstudio.website" target="_blank" rel="noopener noreferrer">
                   Visit Shop
                 </a>
               </Button>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Image - Right Side */}
-          <div className="order-1 lg:order-2">
-            <div 
-              className="aspect-square lg:aspect-[4/5] bg-cover bg-center bg-no-repeat rounded-2xl ceramic-shadow hover-scale"
-              style={{ backgroundImage: `url(${heroImage})` }}
-            />
+      {/* Desktop Version - Half/Half Layout */}
+      <section className="hidden lg:flex min-h-screen bg-background items-center">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 gap-12 items-center min-h-screen">
+            {/* Text Content - Left Side */}
+            <div className="text-left">
+              <h1 className="text-4xl xl:text-7xl font-bold mb-6 leading-tight text-foreground">
+                Handcrafted
+                <span className="block hero-gradient bg-clip-text text-transparent">
+                  Ceramic Art
+                </span>
+              </h1>
+              <p className="text-lg xl:text-2xl mb-8 leading-relaxed text-foreground/80">
+                Discover unique, artisan-made ceramics that bring warmth and character to your home. 
+                Each piece tells a story of craftsmanship and creativity.
+              </p>
+              <div className="flex flex-col xl:flex-row gap-4">
+                <Button asChild size="lg" variant="default" className="ceramic-shadow text-lg px-8 py-4 min-w-[200px]">
+                  <a href="#featured">Explore Collection</a>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="text-lg px-8 py-4 min-w-[200px]">
+                  <a href="https://shop.tfstudio.website" target="_blank" rel="noopener noreferrer">
+                    Visit Shop
+                  </a>
+                </Button>
+              </div>
+            </div>
+
+            {/* Image - Right Side */}
+            <div>
+              <div 
+                className="aspect-square xl:aspect-[4/5] bg-cover bg-center bg-no-repeat rounded-2xl ceramic-shadow hover-scale"
+                style={{ backgroundImage: `url(${heroImage})` }}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
