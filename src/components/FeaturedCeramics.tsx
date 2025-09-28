@@ -26,7 +26,7 @@ const FeaturedCeramics = () => {
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8 mb-12 sm:mb-16">
           <div className="max-w-2xl">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6" style={{ color: 'hsl(var(--collections-foreground))' }}>
-              NEW COLLECTIONS
+              Signature Pieces
             </h2>
             <p className="text-lg sm:text-xl leading-relaxed" style={{ color: 'hsl(var(--collections-foreground) / 0.9)' }}>
               Discover exclusive ceramic collections, created with love and attention to detail. 
