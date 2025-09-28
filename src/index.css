@@ -10,35 +10,35 @@ All colors MUST be HSL.
   :root {
     /* SEO-Optimized Color Palette */
     --background: 27 31% 92%; /* f0eae5 - Light cream for readability */
-    --foreground: 60 4% 11%; /* 1d1d1b - Dark text for contrast */
+    --foreground: 60 4% 11%; /* 1d1d1b - All text unified */
 
     --card: 27 31% 96%;
-    --card-foreground: 60 4% 11%;
+    --card-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
 
     --popover: 27 31% 92%;
-    --popover-foreground: 60 4% 11%;
+    --popover-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
 
     /* Bright Lime Primary for CTAs */
     --primary: 73 100% 50%; /* cbff01 - High-impact accent */
-    --primary-foreground: 60 4% 11%;
+    --primary-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
 
     /* Sage Secondary */
     --secondary: 49 11% 60%; /* a39f8e - Subtle complement */
-    --secondary-foreground: 60 4% 11%;
+    --secondary-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
 
     --muted: 49 11% 65%;
-    --muted-foreground: 60 4% 40%;
+    --muted-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
 
     /* Sage Accent */
     --accent: 49 11% 65%;
-    --accent-foreground: 60 4% 11%;
+    --accent-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
 
     /* Warm Peach for Collections */
     --collections: 18 62% 75%; /* e7b099 - Warm section background */
-    --collections-foreground: 60 4% 11%;
+    --collections-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
 
     --destructive: 0 75% 55%;
-    --destructive-foreground: 27 31% 92%;
+    --destructive-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
 
     --border: 49 11% 80%;
     --input: 49 11% 80%;
