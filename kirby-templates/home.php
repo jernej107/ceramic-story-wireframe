@@ -215,20 +215,20 @@
 </section>
 
 <!-- About Section -->
-<section id="about" class="py-16 sm:py-20 bg-card">
+<section id="about" class="py-20 sm:py-32">
   <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-      <div class="space-y-8">
-        <div>
-          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-card-foreground">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div class="bg-card rounded-2xl p-8 sm:p-12 soft-shadow space-y-8">
+        <div class="space-y-6">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-card-foreground">
             <?= $page->aboutTitle()->or('Our Ceramic Story') ?>
           </h2>
-          <p class="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-8">
+          <p class="text-lg sm:text-xl text-muted-foreground leading-relaxed">
             <?= $page->aboutDescription()->or('Founded with a passion for handcrafted ceramics, TFstudio creates unique pieces that blend traditional techniques with contemporary design. Each piece is carefully crafted to bring warmth and character to your everyday moments.') ?>
           </p>
         </div>
         
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8">
+        <div class="grid grid-cols-3 gap-8 pt-8 border-t border-border">
           <div class="text-center">
             <div class="text-2xl sm:text-3xl font-bold text-primary mb-2"><?= $page->yearsExperience()->or('8+') ?></div>
             <div class="text-sm text-muted-foreground uppercase tracking-wide">Years Crafting</div>
@@ -237,7 +237,7 @@
             <div class="text-2xl sm:text-3xl font-bold text-primary mb-2"><?= $page->piecesCreated()->or('500+') ?></div>
             <div class="text-sm text-muted-foreground uppercase tracking-wide">Pieces Created</div>
           </div>
-          <div class="text-center sm:col-span-1 col-span-2">
+          <div class="text-center">
             <div class="text-2xl sm:text-3xl font-bold text-primary mb-2"><?= $page->happyCustomers()->or('200+') ?></div>
             <div class="text-sm text-muted-foreground uppercase tracking-wide">Happy Customers</div>
           </div>
@@ -245,40 +245,44 @@
       </div>
       
       <div class="order-first lg:order-last">
-        <div class="aspect-[4/3] bg-cover bg-center rounded-lg ceramic-shadow" style="background-image: url('/assets/images/<?= $page->aboutImagename()->or('ceramic-process.jpg') ?>')"></div>
+        <div class="aspect-square bg-cover bg-center rounded-2xl soft-shadow" style="background-image: url('/assets/images/<?= $page->aboutImagename()->or('ceramic-process.jpg') ?>')"></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Second Chance Ceramics -->
-<section id="second-chance" class="py-16 sm:py-20 ceramic-gradient">
+<section id="second-chance" class="py-20 sm:py-32 bg-muted/30">
   <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-      <div class="aspect-[4/3] bg-cover bg-center rounded-lg soft-shadow" style="background-image: url('/assets/images/<?= $page->secondChanceImagename()->or('second-chance-ceramics.jpg') ?>')"></div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div class="aspect-square bg-cover bg-center rounded-2xl soft-shadow" style="background-image: url('/assets/images/<?= $page->secondChanceImagename()->or('second-chance-ceramics.jpg') ?>')"></div>
       
-      <div class="space-y-6">
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
-          <?= $page->secondChanceTitle()->or('Second Chance Ceramics') ?>
-        </h2>
-        <p class="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-          <?= $page->secondChanceDescription()->or('Every ceramic piece has its own journey. Our Second Chance collection celebrates the beauty in imperfection - pieces with unique characteristics, slight variations, or one-of-a-kind features that make them special.') ?>
-        </p>
+      <div class="bg-card rounded-2xl p-8 sm:p-12 soft-shadow space-y-8">
+        <div class="space-y-6">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-card-foreground">
+            <?= $page->secondChanceTitle()->or('Second Chance Ceramics') ?>
+          </h2>
+          <p class="text-lg sm:text-xl text-muted-foreground leading-relaxed">
+            <?= $page->secondChanceDescription()->or('Every ceramic piece has its own journey. Our Second Chance collection celebrates the beauty in imperfection - pieces with unique characteristics, slight variations, or one-of-a-kind features that make them special.') ?>
+          </p>
+        </div>
+        
         <div class="space-y-4">
-          <div class="flex items-start gap-3">
+          <div class="flex items-start gap-4">
             <div class="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
-            <p class="text-muted-foreground">Unique character pieces with natural variations</p>
+            <p class="text-muted-foreground leading-relaxed">Unique character pieces with natural variations</p>
           </div>
-          <div class="flex items-start gap-3">
+          <div class="flex items-start gap-4">
             <div class="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
-            <p class="text-muted-foreground">Sustainable approach to ceramic artistry</p>
+            <p class="text-muted-foreground leading-relaxed">Sustainable approach to ceramic artistry</p>
           </div>
-          <div class="flex items-start gap-3">
+          <div class="flex items-start gap-4">
             <div class="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
-            <p class="text-muted-foreground">Special pricing for distinctive pieces</p>
+            <p class="text-muted-foreground leading-relaxed">Special pricing for distinctive pieces</p>
           </div>
         </div>
-        <a href="<?= $site->shopUrl()->or('https://shop.tfstudio.website') ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-lg font-medium bg-primary text-primary-foreground hover:bg-primary/90 ceramic-shadow px-8 py-4">
+        
+        <a href="<?= $site->shopUrl()->or('https://shop.tfstudio.website') ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-lg font-medium bg-primary text-primary-foreground hover:bg-primary/90 soft-shadow px-8 py-4 ceramic-transition">
           Explore Second Chance
         </a>
       </div>
