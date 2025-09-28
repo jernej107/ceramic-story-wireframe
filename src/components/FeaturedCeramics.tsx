@@ -23,29 +23,17 @@ const FeaturedCeramics = () => {
   return (
     <section id="featured" className="py-16 sm:py-20" style={{ backgroundColor: 'hsl(var(--collections))' }}>
       <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8 mb-12 sm:mb-16">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6" style={{ color: 'hsl(var(--collections-foreground))' }}>
-              Signature Pieces
-            </h2>
-            <p className="text-lg sm:text-xl leading-relaxed" style={{ color: 'hsl(var(--collections-foreground) / 0.9)' }}>
-              Discover exclusive ceramic collections, created with love and attention to detail. 
-              Each piece is a work of art that adds individuality to your home.
-            </p>
-          </div>
-          <a 
-            href="https://shop.tfstudio.website" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 transition-colors group lg:flex-shrink-0 self-start"
-            style={{ color: 'hsl(var(--collections-foreground))' }}
-          >
-            <span className="text-lg font-medium whitespace-nowrap">View All Collections</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </a>
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6" style={{ color: 'hsl(var(--collections-foreground))' }}>
+            Signature Pieces
+          </h2>
+          <p className="text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto" style={{ color: 'hsl(var(--collections-foreground) / 0.9)' }}>
+            Discover exclusive ceramic collections, created with love and attention to detail. 
+            Each piece is a work of art that adds individuality to your home.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
           {collections.map((collection, index) => (
             <div key={index} className="group cursor-pointer">
               <div 
@@ -60,6 +48,27 @@ const FeaturedCeramics = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="text-center">
+          <Button 
+            asChild 
+            size="lg" 
+            variant="outline" 
+            className="ceramic-transition bg-transparent hover:bg-white/10"
+            style={{ 
+              borderColor: 'hsl(var(--collections-foreground) / 0.3)',
+              color: 'hsl(var(--collections-foreground))'
+            }}
+          >
+            <a 
+              href="https://shop.tfstudio.website" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              View All Collections
+            </a>
+          </Button>
         </div>
       </div>
     </section>
