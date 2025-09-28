@@ -11,27 +11,27 @@ const HeroSection = () => {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroImage})` }}
         >
-          <div className="absolute inset-0 bg-foreground/20"></div>
+          <div className="absolute inset-0 bg-foreground/30"></div>
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 container mx-auto px-4 text-center text-white">
+        <div className="relative z-10 container mx-auto px-6 text-center text-white">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
+            <h1 className="text-5xl font-bold mb-8 leading-tight">
               Handcrafted
               <span className="block text-white">
                 Ceramic Art
               </span>
             </h1>
-            <p className="text-lg sm:text-xl mb-8 max-w-2xl mx-auto leading-relaxed text-white/90">
+            <p className="text-xl mb-12 max-w-2xl mx-auto leading-relaxed text-white/90">
               Discover unique, artisan-made ceramics that bring warmth and character to your home. 
               Each piece tells a story of craftsmanship and creativity.
             </p>
-            <div className="flex flex-col gap-4 justify-center items-center">
-              <Button asChild size="lg" variant="default" className="ceramic-shadow text-lg px-8 py-4 min-w-[200px]">
+            <div className="flex flex-col gap-6 justify-center items-center">
+              <Button asChild size="lg" className="bg-white text-foreground hover:bg-white/90 text-lg px-12 py-6 rounded-full font-medium">
                 <a href="#featured">Explore Collection</a>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-foreground text-lg px-8 py-4 min-w-[200px]">
+              <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-foreground text-lg px-12 py-6 rounded-full font-medium">
                 <a href="https://shop.tfstudio.website" target="_blank" rel="noopener noreferrer">
                   Visit Shop
                 </a>
@@ -42,26 +42,26 @@ const HeroSection = () => {
       </section>
 
       {/* Desktop Version - Half/Half Layout */}
-      <section className="hidden lg:flex min-h-screen bg-background items-center">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 gap-12 items-center min-h-screen">
+      <section className="hidden lg:flex min-h-screen bg-background items-center py-20">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 gap-20 items-center min-h-[80vh]">
             {/* Text Content - Left Side */}
-            <div className="text-left">
-              <h1 className="text-4xl xl:text-7xl font-bold mb-6 leading-tight text-foreground">
+            <div className="text-left space-y-8">
+              <h1 className="text-6xl xl:text-7xl font-bold leading-tight text-foreground">
                 Handcrafted
                 <span className="block text-foreground">
                   Ceramic Art
                 </span>
               </h1>
-              <p className="text-lg xl:text-2xl mb-8 leading-relaxed text-foreground/80">
+              <p className="text-xl xl:text-2xl leading-relaxed text-foreground/80 max-w-lg">
                 Discover unique, artisan-made ceramics that bring warmth and character to your home. 
                 Each piece tells a story of craftsmanship and creativity.
               </p>
-              <div className="flex flex-col xl:flex-row gap-4">
-                <Button asChild size="lg" variant="default" className="ceramic-shadow text-lg px-8 py-4 min-w-[200px]">
+              <div className="flex gap-6 pt-4">
+                <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/90 text-lg px-12 py-6 rounded-full font-medium">
                   <a href="#featured">Explore Collection</a>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="text-lg px-8 py-4 min-w-[200px]">
+                <Button asChild size="lg" variant="outline" className="border-2 border-foreground text-foreground hover:bg-foreground hover:text-background text-lg px-12 py-6 rounded-full font-medium">
                   <a href="https://shop.tfstudio.website" target="_blank" rel="noopener noreferrer">
                     Visit Shop
                   </a>
@@ -70,9 +70,9 @@ const HeroSection = () => {
             </div>
 
             {/* Image - Right Side */}
-            <div>
+            <div className="relative">
               <div 
-                className="aspect-square xl:aspect-[4/5] bg-cover bg-center bg-no-repeat rounded-2xl ceramic-shadow hover-scale"
+                className="aspect-[4/5] bg-cover bg-center bg-no-repeat rounded-3xl shadow-2xl"
                 style={{ backgroundImage: `url(${heroImage})` }}
               />
             </div>

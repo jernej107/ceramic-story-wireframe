@@ -21,30 +21,32 @@ const FeaturedCeramics = () => {
   ];
 
   return (
-    <section id="featured" className="py-16 sm:py-20" style={{ backgroundColor: 'hsl(var(--collections))' }}>
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6" style={{ color: 'hsl(var(--collections-foreground))' }}>
+    <section id="featured" className="py-24 bg-white">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl font-bold mb-8 text-foreground">
             Signature Pieces
           </h2>
-          <p className="text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto" style={{ color: 'hsl(var(--collections-foreground) / 0.9)' }}>
+          <p className="text-xl leading-relaxed max-w-3xl mx-auto text-foreground/70">
             Discover exclusive ceramic collections, created with love and attention to detail. 
             Each piece is a work of art that adds individuality to your home.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {collections.map((collection, index) => (
             <div key={index} className="group cursor-pointer">
-              <div 
-                className="aspect-[4/3] bg-cover bg-center rounded-lg mb-4 transition-transform group-hover:scale-105"
-                style={{ backgroundImage: `url(${collection.image})` }}
-              />
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold uppercase tracking-wide" style={{ color: 'hsl(var(--collections-foreground))' }}>
-                  {collection.name}
-                </h3>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" style={{ color: 'hsl(var(--collections-foreground))' }} />
+              <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div 
+                  className="aspect-[4/3] bg-cover bg-center rounded-2xl mb-6"
+                  style={{ backgroundImage: `url(${collection.image})` }}
+                />
+                <div className="text-center">
+                  <h3 className="text-xl font-bold uppercase tracking-wide text-foreground mb-2">
+                    {collection.name}
+                  </h3>
+                  <p className="text-foreground/60 text-sm font-medium">Handcrafted Collection</p>
+                </div>
               </div>
             </div>
           ))}
@@ -54,12 +56,7 @@ const FeaturedCeramics = () => {
           <Button 
             asChild 
             size="lg" 
-            variant="outline" 
-            className="ceramic-transition bg-transparent hover:bg-white/10"
-            style={{ 
-              borderColor: 'hsl(var(--collections-foreground) / 0.3)',
-              color: 'hsl(var(--collections-foreground))'
-            }}
+            className="bg-foreground text-background hover:bg-foreground/90 px-12 py-6 rounded-full text-lg font-medium"
           >
             <a 
               href="https://shop.tfstudio.website" 
