@@ -32,7 +32,7 @@
   <!-- Preload Critical Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Stylesheet -->
   <link rel="stylesheet" href="<?= $site->url() ?>/assets/css/styles.css">
@@ -58,26 +58,26 @@
   <!-- Navigation -->
   <nav class="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b border-border/40">
     <div class="container mx-auto px-4">
-      <div class="flex h-20 items-center justify-between">
+      <div class="flex h-16 items-center justify-between">
         <!-- Logo -->
-        <div class="flex items-center space-x-3">
-          <h1 class="text-2xl font-bold text-foreground"><?= $site->title()->or('TFstudio') ?></h1>
-          <span class="text-sm text-muted-foreground hidden sm:block font-medium">ceramic art</span>
+        <div class="flex items-center space-x-2">
+          <h1 class="text-2xl font-bold text-primary"><?= $site->title()->or('TFstudio') ?></h1>
+          <span class="text-sm text-muted-foreground hidden sm:block">ceramic art</span>
         </div>
 
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center space-x-8">
-          <a href="#featured" class="text-foreground hover:text-primary ceramic-transition font-medium">Featured</a>
-          <a href="#journal" class="text-foreground hover:text-primary ceramic-transition font-medium">Journal</a>
-          <a href="#about" class="text-foreground hover:text-primary ceramic-transition font-medium">About</a>
-          <a href="#second-chance" class="text-foreground hover:text-primary ceramic-transition font-medium">Second Chance</a>
-          <a href="<?= $site->shopUrl()->or('https://shop.tfstudio.website') ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 soft-shadow px-6 py-3 ceramic-transition">
+          <a href="#featured" class="text-foreground hover:text-primary ceramic-transition">Featured</a>
+          <a href="#journal" class="text-foreground hover:text-primary ceramic-transition">Journal</a>
+          <a href="#about" class="text-foreground hover:text-primary ceramic-transition">About</a>
+          <a href="#second-chance" class="text-foreground hover:text-primary ceramic-transition">Second Chance</a>
+          <a href="<?= $site->shopUrl()->or('https://shop.tfstudio.website') ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 ceramic-shadow px-4 py-2">
             Shop
           </a>
         </div>
 
         <!-- Mobile Menu Button -->
-        <button id="mobile-menu-toggle" class="md:hidden p-2 text-foreground hover:text-primary ceramic-transition rounded-lg">
+        <button id="mobile-menu-toggle" class="md:hidden p-2 text-foreground hover:text-primary ceramic-transition">
           <svg id="menu-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
@@ -88,13 +88,13 @@
       </div>
 
       <!-- Mobile Navigation -->
-      <div id="mobile-menu" class="md:hidden py-6 border-t border-border/40 hidden">
+      <div id="mobile-menu" class="md:hidden py-4 border-t border-border/40 hidden">
         <div class="flex flex-col space-y-4">
-          <a href="#featured" class="text-foreground hover:text-primary ceramic-transition font-medium py-2">Featured</a>
-          <a href="#journal" class="text-foreground hover:text-primary ceramic-transition font-medium py-2">Journal</a>
-          <a href="#about" class="text-foreground hover:text-primary ceramic-transition font-medium py-2">About</a>
-          <a href="#second-chance" class="text-foreground hover:text-primary ceramic-transition font-medium py-2">Second Chance</a>
-          <a href="<?= $site->shopUrl()->or('https://shop.tfstudio.website') ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 soft-shadow px-6 py-3 w-fit ceramic-transition">
+          <a href="#featured" class="text-foreground hover:text-primary ceramic-transition">Featured</a>
+          <a href="#journal" class="text-foreground hover:text-primary ceramic-transition">Journal</a>
+          <a href="#about" class="text-foreground hover:text-primary ceramic-transition">About</a>
+          <a href="#second-chance" class="text-foreground hover:text-primary ceramic-transition">Second Chance</a>
+          <a href="<?= $site->shopUrl()->or('https://shop.tfstudio.website') ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 ceramic-shadow px-4 py-2 w-fit">
             Shop
           </a>
         </div>
