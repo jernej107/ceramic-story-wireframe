@@ -9,7 +9,7 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* Ceramic Studio Color Palette */
-    --background: 35 57% 94%;
+    --background: 25 60% 75%;
     --foreground: 30 50% 1%;
 
     --card: 0 0% 100%;
