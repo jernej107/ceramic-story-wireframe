@@ -32,8 +32,8 @@ const FeaturedCeramics = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {collections.map((collection, index) => (
             <div key={index} className="group cursor-pointer">
-              <div className="bg-white rounded-3xl border-2 border-border shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                <div className="p-[5px]">
+              <div className="bg-white rounded-3xl border-2 border-[#1d1d1d] shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div className="p-[10px]">
                   <div 
                     className="aspect-[4/3] bg-cover bg-center rounded-2xl relative overflow-hidden"
                     style={{ backgroundImage: `url(${collection.image})` }}
