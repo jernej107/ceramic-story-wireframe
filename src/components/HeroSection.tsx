@@ -43,7 +43,7 @@ const HeroSection = () => {
         <div className="w-full h-full flex">
           <div className="w-1/2 flex items-center justify-center px-12 bg-background">
             {/* Text Content - Left Side */}
-            <div className="text-left space-y-8 max-w-lg">
+            <div className="text-left space-y-8 max-w-lg p-5">
               <h1 className="text-6xl xl:text-7xl font-bold leading-tight text-foreground">
                 Handcrafted
                 <span className="block text-foreground">
