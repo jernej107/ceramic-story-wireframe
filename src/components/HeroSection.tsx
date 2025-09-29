@@ -39,7 +39,7 @@ const HeroSection = () => {
       </section>
 
       {/* Desktop Version - Half/Half Layout */}
-      <section className="hidden lg:flex min-h-screen bg-background">
+      <section className="hidden lg:flex bg-background">
         <div className="w-full h-full flex">
           <div className="w-1/2 flex items-center justify-center px-12 bg-background">
             {/* Text Content - Left Side */}
