@@ -38,10 +38,16 @@ const HeroSection = () => {
         </div>
       </section>
 
-      {/* Desktop Version - Half/Half Layout */}
-      <section className="hidden lg:flex min-h-screen bg-background items-center">
-        <div className="w-full h-full flex">
-          <div className="w-1/2 flex items-center justify-center px-12">
+      {/* Desktop Version - Half/Half Layout with Full Bleed Image */}
+      <section className="hidden lg:flex min-h-screen relative items-center overflow-hidden">
+        {/* Full Bleed Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        
+        <div className="relative z-10 w-full h-full flex">
+          <div className="w-1/2 flex items-center justify-center px-12 bg-background/95">
             {/* Text Content - Left Side */}
             <div className="text-left space-y-8 max-w-lg">
               <h1 className="text-6xl xl:text-7xl font-bold leading-tight text-foreground">
@@ -64,13 +70,8 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Image - Right Side */}
-          <div className="w-1/2 relative">
-            <div 
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${heroImage})` }}
-            />
-          </div>
+          {/* Right Side - Image shows through */}
+          <div className="w-1/2"></div>
         </div>
       </section>
     </>
