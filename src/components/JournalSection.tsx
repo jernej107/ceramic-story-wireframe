@@ -28,7 +28,7 @@ const JournalSection = () => {
   ];
 
   return (
-    <section id="journal" className="py-24 bg-background">
+    <section id="journal" className="py-12 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
           <h2 className="text-5xl font-bold mb-8 text-foreground">

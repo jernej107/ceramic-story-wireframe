@@ -2,7 +2,7 @@ import processImage from "@/assets/ceramic-process.jpg";
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-20 ceramic-gradient">
+    <section id="about" className="py-12 ceramic-gradient">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="order-2 lg:order-1">
