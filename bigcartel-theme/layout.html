@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- SEO Meta Tags -->
+  <title>{% if page.name %}{{ page.name }} - {% endif %}{{ store.name }}</title>
+  <meta name="description" content="{% if page.meta_description %}{{ page.meta_description }}{% else %}{{ store.description }}{% endif %}">
+  <meta name="keywords" content="{{ store.meta_keywords }}">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ store.url }}{{ page.permalink }}">
+  <meta property="og:title" content="{% if page.name %}{{ page.name }} - {% endif %}{{ store.name }}">
+  <meta property="og:description" content="{% if page.meta_description %}{{ page.meta_description }}{% else %}{{ store.description }}{% endif %}">
+  {% if page.image %}
+    <meta property="og:image" content="{{ page.image | product_image_url }}">
+  {% elsif store.logo %}
+    <meta property="og:image" content="{{ store.logo | store_image_url }}">
+  {% endif %}
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="{{ store.url }}{{ page.permalink }}">
+  <meta property="twitter:title" content="{% if page.name %}{{ page.name }} - {% endif %}{{ store.name }}">
+  <meta property="twitter:description" content="{% if page.meta_description %}{{ page.meta_description }}{% else %}{{ store.description }}{% endif %}">
+  {% if page.image %}
+    <meta property="twitter:image" content="{{ page.image | product_image_url }}">
+  {% endif %}
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="{{ store.url }}{{ page.permalink }}">
+  
+  <!-- Favicon -->
+  {% if store.favicon %}
+    <link rel="icon" type="image/x-icon" href="{{ store.favicon }}">
+  {% endif %}
+  
+  <!-- Preload Critical Fonts -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300;400;500;600;700&display=swap"></noscript>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "{{ store.name }}",
+    "description": "{{ store.description }}",
+    "url": "{{ store.url }}",
+    {% if store.logo %}
+    "logo": "{{ store.logo | store_image_url }}",
+    {% endif %}
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "{{ store.city }}",
+      "addressRegion": "{{ store.state }}",
+      "addressCountry": "{{ store.country }}"
+    },
+    "sameAs": [
+      {% if store.website %}"{{ store.website }}"{% endif %}
+      {% if store.facebook %}, "{{ store.facebook }}"{% endif %}
+      {% if store.twitter %}, "{{ store.twitter }}"{% endif %}
+      {% if store.instagram %}, "{{ store.instagram }}"{% endif %}
+    ]
+  }
+  </script>
+  
+  <!-- Custom CSS -->
+  {{ theme | theme_css }}
+  
+  <!-- Custom Styles -->
+  <style>
+    {% if theme.custom_css %}
+      {{ theme.custom_css }}
+    {% endif %}
+  </style>
+</head>
+
+<body class="{% if cart.item_count > 0 %}cart-has-items{% endif %}">
+  
+  <!-- Navigation Header -->
+  <header class="site-nav" role="banner">
+    <div class="container">
+      <nav class="nav-inner" role="navigation" aria-label="Main Navigation">
+        <!-- Site Title/Logo -->
+        <a href="{{ store.url }}" class="site-title">
+          {% if store.logo %}
+            <img src="{{ store.logo | store_image_url }}" alt="{{ store.name }}" style="height: 40px;">
+          {% else %}
+            {{ store.name }}
+          {% endif %}
+        </a>
+        
+        <!-- Navigation Menu -->
+        <ul class="nav-menu">
+          <li><a href="{{ store.url }}" class="nav-link">Home</a></li>
+          <li><a href="{{ store.url }}/products" class="nav-link">Shop</a></li>
+          {% for category in store.categories %}
+            <li><a href="{{ store.url }}/category/{{ category.permalink }}" class="nav-link">{{ category.name }}</a></li>
+          {% endfor %}
+          {% for page in store.pages %}
+            <li><a href="{{ store.url }}/page/{{ page.permalink }}" class="nav-link">{{ page.name }}</a></li>
+          {% endfor %}
+          <li>
+            <a href="{{ store.url }}/cart" class="nav-link">
+              Cart {% if cart.item_count > 0 %}({{ cart.item_count }}){% endif %}
+            </a>
+          </li>
+        </ul>
+        
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" style="display: none;">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main role="main" class="fade-in">
+    <div class="container">
+      {{ content_for_layout }}
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <!-- About Section -->
+        <div class="footer-section">
+          <h3>{{ store.name }}</h3>
+          <p>{{ store.description }}</p>
+          {% if store.website %}
+            <a href="{{ store.website }}" class="footer-link">Visit Main Website</a>
+          {% endif %}
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <a href="{{ store.url }}/products" class="footer-link">All Products</a>
+          {% for category in store.categories %}
+            <a href="{{ store.url }}/category/{{ category.permalink }}" class="footer-link">{{ category.name }}</a>
+          {% endfor %}
+          <a href="{{ store.url }}/cart" class="footer-link">Shopping Cart</a>
+        </div>
+        
+        <!-- Customer Care -->
+        <div class="footer-section">
+          <h3>Customer Care</h3>
+          {% for page in store.pages %}
+            <a href="{{ store.url }}/page/{{ page.permalink }}" class="footer-link">{{ page.name }}</a>
+          {% endfor %}
+          {% if store.email %}
+            <a href="mailto:{{ store.email }}" class="footer-link">Contact Us</a>
+          {% endif %}
+        </div>
+        
+        <!-- Social Links -->
+        <div class="footer-section">
+          <h3>Follow Us</h3>
+          {% if store.facebook %}
+            <a href="{{ store.facebook }}" class="footer-link" target="_blank" rel="noopener">Facebook</a>
+          {% endif %}
+          {% if store.twitter %}
+            <a href="{{ store.twitter }}" class="footer-link" target="_blank" rel="noopener">Twitter</a>
+          {% endif %}
+          {% if store.instagram %}
+            <a href="{{ store.instagram }}" class="footer-link" target="_blank" rel="noopener">Instagram</a>
+          {% endif %}
+        </div>
+      </div>
+      
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>&copy; {{ "now" | date: "%Y" }} {{ store.name }}. All rights reserved.</p>
+        <p>
+          <a href="{{ store.url }}/page/privacy-policy" class="footer-link">Privacy Policy</a> | 
+          <a href="{{ store.url }}/page/terms-of-service" class="footer-link">Terms of Service</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Notification -->
+  <div id="cart-notification" class="cart-notification" style="display: none;">
+    <div class="cart-notification-content">
+      <p>Item added to cart!</p>
+      <a href="{{ store.url }}/cart" class="btn btn-primary">View Cart</a>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleButton = document.querySelector('.mobile-menu-toggle');
+      const navMenu = document.querySelector('.nav-menu');
+      
+      if (toggleButton && navMenu) {
+        toggleButton.addEventListener('click', function() {
+          navMenu.classList.toggle('mobile-menu-open');
+          toggleButton.classList.toggle('active');
+        });
+      }
+      
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+      
+      // Cart notification
+      window.showCartNotification = function() {
+        const notification = document.getElementById('cart-notification');
+        if (notification) {
+          notification.style.display = 'block';
+          setTimeout(() => {
+            notification.style.display = 'none';
+          }, 3000);
+        }
+      };
+    });
+  </script>
+  
+  <!-- Additional Custom JavaScript -->
+  {% if theme.custom_js %}
+    <script>{{ theme.custom_js }}</script>
+  {% endif %}
+  
+</body>
+</html>
