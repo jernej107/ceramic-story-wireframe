@@ -28,9 +28,6 @@ const HeroSection = () => {
               Each piece tells a story of craftsmanship and creativity.
             </p>
             <div className="flex flex-col gap-6 justify-center items-center">
-              <Button asChild size="lg" className="bg-white text-foreground hover:bg-white/90 text-lg px-12 py-6 rounded-full font-medium">
-                <a href="#featured">Explore Collection</a>
-              </Button>
               <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-foreground text-lg px-12 py-6 rounded-full font-medium">
                 <a href="https://shop.tfstudio.website" target="_blank" rel="noopener noreferrer">
                   Visit Shop
@@ -58,9 +55,6 @@ const HeroSection = () => {
                 Each piece tells a story of craftsmanship and creativity.
               </p>
               <div className="flex gap-6 pt-4">
-                <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/90 text-lg px-12 py-6 rounded-full font-medium">
-                  <a href="#featured">Explore Collection</a>
-                </Button>
                 <Button asChild size="lg" variant="outline" className="border-2 border-foreground text-foreground hover:bg-foreground hover:text-background text-lg px-12 py-6 rounded-full font-medium">
                   <a href="https://shop.tfstudio.website" target="_blank" rel="noopener noreferrer">
                     Visit Shop
