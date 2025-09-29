@@ -36,16 +36,20 @@ const FeaturedCeramics = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {collections.map((collection, index) => (
             <div key={index} className="group cursor-pointer">
-              <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                <div 
-                  className="aspect-[4/3] bg-cover bg-center rounded-2xl mb-6"
-                  style={{ backgroundImage: `url(${collection.image})` }}
-                />
-                <div className="text-center">
-                  <h3 className="text-xl font-bold uppercase tracking-wide text-foreground mb-2">
-                    {collection.name}
-                  </h3>
-                  <p className="text-foreground/60 text-sm font-medium">Handcrafted Collection</p>
+              <div className="bg-white rounded-3xl border-2 border-border shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div className="p-[5px]">
+                  <div 
+                    className="aspect-[4/3] bg-cover bg-center rounded-2xl relative overflow-hidden"
+                    style={{ backgroundImage: `url(${collection.image})` }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 text-center">
+                      <h3 className="text-xl font-bold uppercase tracking-wide text-white mb-1 drop-shadow-lg">
+                        {collection.name}
+                      </h3>
+                      <p className="text-white/90 text-sm font-medium drop-shadow-md">Handcrafted Collection</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
