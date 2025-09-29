@@ -59,9 +59,9 @@ export default {
         },
       },
       fontFamily: {
-        'bricolage': ['Bricolage Grotesque', 'sans-serif'],
-        'display': ['Bricolage Grotesque', 'sans-serif'],
-        'body': ['Bricolage Grotesque', 'sans-serif'],
+        'alan': ['Alan Sans', 'sans-serif'],
+        'display': ['Alan Sans', 'sans-serif'],
+        'body': ['Alan Sans', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
