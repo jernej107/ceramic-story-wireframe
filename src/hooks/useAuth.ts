@@ -69,7 +69,7 @@ export const useAuth = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, [checkUserRoles]);
+  }, []); // Fixed: removed checkUserRoles from dependency array
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({
