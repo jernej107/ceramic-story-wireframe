@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -20,18 +20,35 @@ export const useAuth = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isEditor, setIsEditor] = useState(false);
 
+  const checkUserRoles = useCallback(async (userId: string) => {
+    try {
+      const { data: roles } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId);
+
+      if (roles) {
+        const userRoles = roles.map(r => r.role);
+        setIsAdmin(userRoles.includes('admin'));
+        setIsEditor(userRoles.includes('editor') || userRoles.includes('admin'));
+      }
+    } catch (error) {
+      console.error('Error checking user roles:', error);
+      setIsAdmin(false);
+      setIsEditor(false);
+    }
+  }, []);
+
   useEffect(() => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         
         // Check user roles when session changes
         if (session?.user) {
-          setTimeout(async () => {
-            await checkUserRoles(session.user.id);
-          }, 0);
+          checkUserRoles(session.user.id);
         } else {
           setIsAdmin(false);
           setIsEditor(false);
@@ -52,24 +69,7 @@ export const useAuth = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
-
-  const checkUserRoles = async (userId: string) => {
-    try {
-      const { data: roles } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', userId);
-
-      if (roles) {
-        const userRoles = roles.map(r => r.role);
-        setIsAdmin(userRoles.includes('admin'));
-        setIsEditor(userRoles.includes('editor') || userRoles.includes('admin'));
-      }
-    } catch (error) {
-      console.error('Error checking user roles:', error);
-    }
-  };
+  }, [checkUserRoles]);
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({
