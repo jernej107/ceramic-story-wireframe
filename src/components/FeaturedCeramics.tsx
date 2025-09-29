@@ -27,10 +27,6 @@ const FeaturedCeramics = () => {
           <h2 className="text-5xl font-bold mb-8 text-foreground">
             Signature Pieces
           </h2>
-          <p className="text-xl leading-relaxed max-w-3xl mx-auto text-foreground/70">
-            Discover exclusive ceramic collections, created with love and attention to detail. 
-            Each piece is a work of art that adds individuality to your home.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
