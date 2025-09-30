@@ -11,21 +11,21 @@ const Navigation = () => {
       <div className="container mx-auto px-6">
         <div className="flex h-20 items-end justify-between pb-4">
           {/* Logo */}
-          <div className="flex items-center">
-            <h1 className="text-3xl font-bold text-primary font-display">TFstudio</h1>
-          </div>
+          <Link to="/" className="flex items-center">
+            <h1 className="text-3xl font-bold text-primary font-display hover:opacity-80 ceramic-transition">TFstudio</h1>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-12">
             <a href="#featured" className="text-foreground hover:text-primary transition-colors font-medium text-sm uppercase tracking-wider">
               Featured
             </a>
-            <a href="#journal" className="text-foreground hover:text-primary transition-colors font-medium text-sm uppercase tracking-wider">
+            <Link to="/journal" className="text-foreground hover:text-primary transition-colors font-medium text-sm uppercase tracking-wider">
               Journal
-            </a>
-            <a href="#about" className="text-foreground hover:text-primary transition-colors font-medium text-sm uppercase tracking-wider">
+            </Link>
+            <Link to="/about" className="text-foreground hover:text-primary transition-colors font-medium text-sm uppercase tracking-wider">
               About
-            </a>
+            </Link>
             <Link to="/second-chance" className="text-foreground hover:text-primary transition-colors font-medium text-sm uppercase tracking-wider">
               Second Chance
             </Link>
@@ -55,12 +55,12 @@ const Navigation = () => {
               <a href="#featured" className="text-foreground hover:text-primary ceramic-transition font-medium text-sm uppercase tracking-wide">
                 Featured
               </a>
-              <a href="#journal" className="text-foreground hover:text-primary ceramic-transition font-medium text-sm uppercase tracking-wide">
+              <Link to="/journal" className="text-foreground hover:text-primary ceramic-transition font-medium text-sm uppercase tracking-wide">
                 Journal
-              </a>
-              <a href="#about" className="text-foreground hover:text-primary ceramic-transition font-medium text-sm uppercase tracking-wide">
+              </Link>
+              <Link to="/about" className="text-foreground hover:text-primary ceramic-transition font-medium text-sm uppercase tracking-wide">
                 About
-              </a>
+              </Link>
               <Link to="/second-chance" className="text-foreground hover:text-primary ceramic-transition font-medium text-sm uppercase tracking-wide">
                 Second Chance
               </Link>
