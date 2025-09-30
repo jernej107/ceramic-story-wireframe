@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,9 +26,9 @@ const Navigation = () => {
             <a href="#about" className="text-foreground hover:text-primary transition-colors font-medium text-sm uppercase tracking-wider">
               About
             </a>
-            <a href="#second-chance" className="text-foreground hover:text-primary transition-colors font-medium text-sm uppercase tracking-wider">
+            <Link to="/second-chance" className="text-foreground hover:text-primary transition-colors font-medium text-sm uppercase tracking-wider">
               Second Chance
-            </a>
+            </Link>
             <a 
               href="https://shop.tfstudio.website" 
               target="_blank" 
@@ -60,9 +61,9 @@ const Navigation = () => {
               <a href="#about" className="text-foreground hover:text-primary ceramic-transition font-medium text-sm uppercase tracking-wide">
                 About
               </a>
-              <a href="#second-chance" className="text-foreground hover:text-primary ceramic-transition font-medium text-sm uppercase tracking-wide">
+              <Link to="/second-chance" className="text-foreground hover:text-primary ceramic-transition font-medium text-sm uppercase tracking-wide">
                 Second Chance
-              </a>
+              </Link>
               <a 
                 href="https://shop.tfstudio.website" 
                 target="_blank" 
