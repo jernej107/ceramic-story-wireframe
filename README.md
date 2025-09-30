@@ -20,9 +20,11 @@ Production-ready ceramic studio website with headless CMS. Designed for deployme
 
 ```
 ┌─────────────────────────────────────────┐
-│         Caddy Reverse Proxy             │
-│         (Port 80/443 - HTTPS)           │
+│    Caddy (Docker Container)             │
+│    Ports 80/443 - HTTPS + Auto SSL      │
 └──────┬──────────────────────┬───────────┘
+       │                      │
+       │   Docker Network: proxy
        │                      │
 ┌──────▼──────────┐   ┌───────▼──────────┐
 │  React App      │   │  Strapi CMS      │
@@ -41,15 +43,18 @@ Production-ready ceramic studio website with headless CMS. Designed for deployme
 - Frontend: React 18 + TypeScript + Vite + Tailwind
 - CMS: Strapi 4.x
 - Database: PostgreSQL 15
-- Reverse Proxy: Caddy (already configured)
+- Reverse Proxy: Caddy 2 (Docker container - already running)
 - Containers: Docker + Docker Compose
+- Network: Shared `proxy` network for inter-container communication
 
 ---
 
 ## 📋 Prerequisites
 
-- CentOS Linode server with Caddy already installed and running
+- CentOS Linode server
 - Docker and Docker Compose installed
+- Caddy running in Docker container (already configured)
+- Docker network `proxy` created and Caddy connected to it
 - Domain pointed to server IP
 - Git installed
 
@@ -57,59 +62,66 @@ Production-ready ceramic studio website with headless CMS. Designed for deployme
 
 ## 🚀 React App Docker Setup
 
-### 1. Clone Repository
+### 1. Create Project Directory
 
 ```bash
-cd /var/www
-git clone <YOUR_REPO_URL> tfstudio
-cd tfstudio
+mkdir -p /srv/tfstudio
+cd /srv/tfstudio
 ```
 
-### 2. Configure Environment
+### 2. Clone Repository
+
+```bash
+git clone <YOUR_REPO_URL> app
+cd app
+```
+
+### 3. Configure Environment
 
 ```bash
 cat > .env << 'EOF'
-VITE_STRAPI_URL=https://yourdomain.com
-VITE_STRAPI_API_URL=https://yourdomain.com/api
+VITE_STRAPI_URL=https://tfstudio.website
+VITE_STRAPI_API_URL=https://tfstudio.website/api
 EOF
 ```
 
-### 3. Docker Configuration
+### 4. Docker Configuration
 
-**Dockerfile** (already in project):
-```dockerfile
-# Build stage
-FROM node:20-alpine AS build
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
+The project includes `Dockerfile` and `docker-compose.yml` already configured. You just need to ensure they connect to the Caddy `proxy` network.
 
-# Production stage
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+Update your `docker-compose.yml` to connect to Caddy's network:
+
+```yaml
+version: '3.8'
+
+services:
+  tfstudio-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tfstudio
+    restart: unless-stopped
+    expose:
+      - "80"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
 ```
 
-### 4. Build and Run React App
+### 5. Build and Start React App
 
 ```bash
-# Build the image
-docker build -t tfstudio-frontend .
-
-# Run the container
-docker run -d \
-  --name tfstudio-frontend \
-  --restart unless-stopped \
-  -p 3000:80 \
-  tfstudio-frontend
+# Build and start the container
+docker-compose up -d --build
 
 # Verify it's running
-docker ps
-curl http://localhost:3000
+docker-compose ps
+docker logs tfstudio
 ```
 
 ---
@@ -119,8 +131,9 @@ curl http://localhost:3000
 ### 1. Create Strapi Directory
 
 ```bash
-cd /var/www/tfstudio
+cd /srv/tfstudio
 mkdir -p strapi
+cd strapi
 ```
 
 ### 2. Generate Secure Secrets
@@ -136,7 +149,7 @@ DB_PASSWORD=$(openssl rand -base64 32)
 ### 3. Create Strapi Environment File
 
 ```bash
-cat > strapi/.env << EOF
+cat > .env << EOF
 HOST=0.0.0.0
 PORT=1337
 APP_KEYS=$APP_KEYS
@@ -157,30 +170,9 @@ NODE_ENV=production
 EOF
 ```
 
-### 4. Create Strapi Dockerfile
+### 4. Create Strapi Docker Compose
 
-```bash
-cat > Dockerfile.strapi << 'EOF'
-FROM node:18-alpine
-
-WORKDIR /app
-
-# Install Strapi
-RUN npm install -g @strapi/strapi@latest
-
-# Create Strapi project
-RUN strapi new . --quickstart --no-run
-
-# Copy configuration
-COPY strapi/.env .env
-
-EXPOSE 1337
-
-CMD ["npm", "run", "develop"]
-EOF
-```
-
-### 5. Create Docker Compose File
+Create a separate `docker-compose.strapi.yml` in `/srv/tfstudio/strapi/`:
 
 ```bash
 cat > docker-compose.yml << 'EOF'
@@ -198,54 +190,40 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - tfstudio-network
+      - proxy
 
   strapi:
-    build:
-      context: .
-      dockerfile: Dockerfile.strapi
+    image: strapi/strapi:latest
     container_name: tfstudio-strapi
     restart: unless-stopped
     env_file:
-      - ./strapi/.env
-    ports:
-      - "1337:1337"
+      - .env
+    expose:
+      - "1337"
     volumes:
-      - strapi_data:/app
-      - strapi_uploads:/app/public/uploads
+      - ./app:/srv/app
+      - strapi_uploads:/srv/app/public/uploads
     depends_on:
       - postgres
     networks:
-      - tfstudio-network
-
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: tfstudio-frontend
-    restart: unless-stopped
-    ports:
-      - "3000:80"
-    environment:
-      - NODE_ENV=production
-    networks:
-      - tfstudio-network
+      - proxy
 
 volumes:
   postgres_data:
-  strapi_data:
   strapi_uploads:
 
 networks:
-  tfstudio-network:
-    driver: bridge
+  proxy:
+    external: true
 EOF
 ```
 
-### 6. Launch All Services
+### 5. Launch Strapi Services
 
 ```bash
-# Start everything
+cd /srv/tfstudio/strapi
+
+# Start Strapi and PostgreSQL
 docker-compose up -d
 
 # Check status
@@ -255,88 +233,61 @@ docker-compose ps
 docker-compose logs -f strapi
 ```
 
-### 7. Initialize Strapi Admin
+### 6. Initialize Strapi Admin
 
-1. Visit `http://YOUR_SERVER_IP:1337/admin`
+1. Visit `https://tfstudio.website/admin`
 2. Create admin account
 3. Start adding content
+
+**Note:** After Caddy configuration update in the previous section, Strapi will be accessible through the main domain.
 
 ---
 
 ## 🔀 Caddy Integration
 
-### Add to Your Existing Caddyfile
+Since you already have Caddy running in Docker, update your Caddyfile at `/srv/tfstudio/caddy/Caddyfile`:
 
-Add this configuration to your existing Caddyfile (typically at `/etc/caddy/Caddyfile`):
+### Updated Caddyfile Configuration
 
 ```caddyfile
-# React Frontend
-yourdomain.com {
-    reverse_proxy localhost:3000
+# Redirect www → apex
+www.tfstudio.website {
+    redir https://tfstudio.website{uri} permanent
+}
+
+tfstudio.website {
+    # Strapi CMS routes (must come first for specific matching)
+    reverse_proxy /api/* tfstudio-strapi:1337
+    reverse_proxy /admin* tfstudio-strapi:1337
+    reverse_proxy /uploads/* tfstudio-strapi:1337
+    reverse_proxy /graphql tfstudio-strapi:1337
     
-    encode gzip
+    # React Frontend (default/fallback)
+    reverse_proxy tfstudio:80
+    
+    encode zstd gzip
     
     # Security headers
     header {
-        X-Frame-Options "SAMEORIGIN"
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
         X-Content-Type-Options "nosniff"
-        X-XSS-Protection "1; mode=block"
-        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "no-referrer-when-downgrade"
     }
-}
-
-# Strapi CMS
-yourdomain.com {
-    # API endpoints
-    reverse_proxy /api/* localhost:1337
-    
-    # Admin panel
-    reverse_proxy /admin* localhost:1337
-    
-    # Uploaded media
-    reverse_proxy /uploads/* localhost:1337
-    
-    # GraphQL (if enabled)
-    reverse_proxy /graphql localhost:1337
 }
 ```
 
-### Reload Caddy
+### Reload Caddy Container
 
 ```bash
-# Test configuration
-caddy validate --config /etc/caddy/Caddyfile
+# Reload Caddy configuration
+docker exec caddy caddy reload --config /etc/caddy/Caddyfile
 
-# Reload Caddy
-systemctl reload caddy
+# Or restart the container
+docker restart caddy
 
-# Check status
-systemctl status caddy
-```
-
-### Alternative: Simplified Single Block
-
-If you prefer a simpler approach:
-
-```caddyfile
-yourdomain.com {
-    # Frontend (default)
-    reverse_proxy localhost:3000
-    
-    # Strapi paths
-    reverse_proxy /api/* localhost:1337
-    reverse_proxy /admin* localhost:1337
-    reverse_proxy /uploads/* localhost:1337
-    reverse_proxy /graphql localhost:1337
-    
-    encode gzip
-    
-    header {
-        X-Frame-Options "SAMEORIGIN"
-        X-Content-Type-Options "nosniff"
-        Strict-Transport-Security "max-age=31536000"
-    }
-}
+# Check logs
+docker logs caddy
 ```
 
 ---
@@ -410,18 +361,21 @@ Organize blog posts and products.
 ### View Logs
 
 ```bash
-cd /var/www/tfstudio
+# React app logs
+docker logs tfstudio
 
-# All services
-docker-compose logs -f
-
-# Specific service
+# Strapi logs
+cd /srv/tfstudio/strapi
 docker-compose logs -f strapi
-docker-compose logs -f frontend
+
+# PostgreSQL logs
 docker-compose logs -f postgres
 
+# Caddy logs
+docker logs caddy
+
 # Last 100 lines
-docker-compose logs --tail=100 strapi
+docker logs --tail=100 tfstudio
 ```
 
 ### Database Backup
@@ -434,7 +388,7 @@ BACKUP_DIR="/var/backups/tfstudio"
 DATE=$(date +%Y%m%d_%H%M%S)
 mkdir -p $BACKUP_DIR
 
-cd /var/www/tfstudio
+cd /srv/tfstudio/strapi
 docker-compose exec -T postgres \
   pg_dump -U strapi strapi | gzip > $BACKUP_DIR/db_$DATE.sql.gz
 
@@ -456,7 +410,7 @@ echo "0 2 * * * root /usr/local/bin/backup-tfstudio.sh" >> /etc/crontab
 ### Restore Database
 
 ```bash
-cd /var/www/tfstudio
+cd /srv/tfstudio/strapi
 
 gunzip -c /var/backups/tfstudio/db_20240101_020000.sql.gz | \
   docker-compose exec -T postgres psql -U strapi strapi
@@ -484,14 +438,15 @@ docker run --rm \
 ### Update Application
 
 ```bash
-cd /var/www/tfstudio
-
-# Pull changes
+# Update React app
+cd /srv/tfstudio/app
 git pull origin main
+docker-compose up -d --build
 
-# Rebuild and restart
-docker-compose up -d --build --no-deps frontend
-docker-compose up -d --build --no-deps strapi
+# Update Strapi
+cd /srv/tfstudio/strapi
+docker-compose pull strapi
+docker-compose up -d
 
 # Clean old images
 docker image prune -f
@@ -516,19 +471,25 @@ df -h
 ### Restart Services
 
 ```bash
-cd /var/www/tfstudio
-
-# Restart specific service
-docker-compose restart strapi
-docker-compose restart frontend
-
-# Restart all
+# Restart React app
+cd /srv/tfstudio/app
 docker-compose restart
 
+# Restart Strapi
+cd /srv/tfstudio/strapi
+docker-compose restart strapi
+
+# Restart Caddy
+docker restart caddy
+
 # Stop all
+docker stop tfstudio caddy
+cd /srv/tfstudio/strapi
 docker-compose down
 
 # Start all
+docker start tfstudio caddy
+cd /srv/tfstudio/strapi
 docker-compose up -d
 ```
 
@@ -589,17 +550,20 @@ docker-compose up -d
 
 ```bash
 # Check Caddy logs
-journalctl -u caddy -f
+docker logs caddy
 
-# Validate config
-caddy validate --config /etc/caddy/Caddyfile
+# Validate config inside container
+docker exec caddy caddy validate --config /etc/caddy/Caddyfile
 
 # Reload Caddy
-systemctl reload caddy
+docker exec caddy caddy reload --config /etc/caddy/Caddyfile
 
-# Test locally
-curl http://localhost:3000  # Should return React app
-curl http://localhost:1337/admin  # Should return Strapi
+# Or restart
+docker restart caddy
+
+# Test connectivity from Caddy to app containers
+docker exec caddy wget -O- http://tfstudio:80
+docker exec caddy wget -O- http://tfstudio-strapi:1337
 ```
 
 ### Firewall Issues on CentOS
@@ -656,16 +620,19 @@ Caddy handles SSL automatically. If issues occur:
 
 ```bash
 # Check Caddy logs for certificate errors
-journalctl -u caddy -n 100
+docker logs caddy | grep -i certificate
 
-# Force certificate renewal
-caddy reload
+# Force certificate renewal by restarting
+docker restart caddy
 
 # Verify domain DNS
-dig yourdomain.com
+dig tfstudio.website
 
 # Check ports are accessible externally
-telnet yourdomain.com 443
+telnet tfstudio.website 443
+
+# Ensure Caddy data volume persists certificates
+docker volume inspect caddy_data
 ```
 
 ---
@@ -682,39 +649,43 @@ telnet yourdomain.com 443
 ## 🚀 Quick Commands Reference
 
 ```bash
-# Start everything
-docker-compose up -d
+# Start React app
+cd /srv/tfstudio/app && docker-compose up -d
 
-# Stop everything
-docker-compose down
+# Start Strapi
+cd /srv/tfstudio/strapi && docker-compose up -d
+
+# Start Caddy
+docker start caddy
 
 # View logs
-docker-compose logs -f
+docker logs tfstudio
+docker logs caddy
+cd /srv/tfstudio/strapi && docker-compose logs -f
 
-# Restart service
-docker-compose restart strapi
-
-# Rebuild frontend
-docker-compose up -d --build frontend
+# Restart services
+docker restart tfstudio
+docker restart caddy
+cd /srv/tfstudio/strapi && docker-compose restart
 
 # Check status
-docker-compose ps
+docker ps
 
-# Clean up
-docker system prune -a
+# Update React app
+cd /srv/tfstudio/app && git pull && docker-compose up -d --build
 
 # Backup database
 /usr/local/bin/backup-tfstudio.sh
 
-# Update app
-git pull && docker-compose up -d --build
+# Clean up
+docker system prune -a
 ```
 
 ---
 
 **Your site will be available at:**
-- 🌐 Frontend: `https://yourdomain.com`
-- 🎨 Strapi Admin: `https://yourdomain.com/admin`
-- 🔌 API: `https://yourdomain.com/api`
+- 🌐 Frontend: `https://tfstudio.website`
+- 🎨 Strapi Admin: `https://tfstudio.website/admin`
+- 🔌 API: `https://tfstudio.website/api`
 
-Caddy automatically handles HTTPS with Let's Encrypt certificates!
+Caddy Docker container automatically handles HTTPS with Let's Encrypt certificates!

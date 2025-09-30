@@ -5,9 +5,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: tfstudio-website
-    ports:
-      - "80:80"
+    container_name: tfstudio
     restart: unless-stopped
+    expose:
+      - "80"
     environment:
       - NODE_ENV=production
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
