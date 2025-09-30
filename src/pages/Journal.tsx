@@ -7,8 +7,10 @@ import Footer from "@/components/Footer";
 import featuredCeramics from "@/assets/featured-ceramics.jpg";
 import ceramicProcess from "@/assets/ceramic-process.jpg";
 import secondChanceCeramics from "@/assets/second-chance-ceramics.jpg";
+import { useState } from "react";
 
 const Journal = () => {
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const journalPosts = [
     {
       title: "The Art of Ceramic Glazing",
@@ -62,6 +64,10 @@ const Journal = () => {
 
   const categories = ["All", "Technique", "Philosophy", "Studio Life", "Sustainability", "History"];
 
+  const filteredPosts = selectedCategory === "All" 
+    ? journalPosts 
+    : journalPosts.filter(post => post.category === selectedCategory);
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navigation />
@@ -99,8 +105,9 @@ const Journal = () => {
               {categories.map((category) => (
                 <Button
                   key={category}
-                  variant={category === "All" ? "default" : "outline"}
+                  variant={category === selectedCategory ? "default" : "outline"}
                   className="whitespace-nowrap"
+                  onClick={() => setSelectedCategory(category)}
                 >
                   {category}
                 </Button>
@@ -113,7 +120,7 @@ const Journal = () => {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {journalPosts.map((post, index) => (
+              {filteredPosts.map((post, index) => (
                 <Card key={index} className="group hover:-translate-y-2 ceramic-transition border-0 ceramic-shadow overflow-hidden">
                   <div className="relative overflow-hidden">
                     <img
