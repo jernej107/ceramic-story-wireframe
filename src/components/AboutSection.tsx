@@ -1,19 +1,36 @@
 import processImage from "@/assets/ceramic-process.jpg";
+import { useStudioInfo } from "@/lib/hooks/useStudioInfo";
+import { getStrapiImageUrl } from "@/lib/strapi";
 
 const AboutSection = () => {
+  const { data: studioInfo, isLoading } = useStudioInfo();
+
+  const aboutTitle = studioInfo?.about_title || "About TFstudio";
+  const aboutDescription = studioInfo?.about_description || "Founded with a passion for handmade ceramics, TFstudio is more than just a pottery studio – it's a celebration of the ancient art of ceramics in the modern world.";
+  const aboutImageUrl = studioInfo?.about_image ? getStrapiImageUrl(studioInfo.about_image.url) : processImage;
+  const piecesCreated = studioInfo?.pieces_created || "500+";
+  const yearsExperience = studioInfo?.years_experience || "5";
+
+  if (isLoading) {
+    return (
+      <section className="py-12 ceramic-gradient">
+        <div className="container mx-auto px-4 text-center">
+          <div className="animate-pulse text-muted-foreground">Loading...</div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="about" className="py-12 ceramic-gradient">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="order-2 lg:order-1">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              About TFstudio
+              {aboutTitle}
             </h2>
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
-              <p>
-                Founded with a passion for handmade ceramics, TFstudio is more than just a pottery 
-                studio – it's a celebration of the ancient art of ceramics in the modern world.
-              </p>
+              <p>{aboutDescription}</p>
               <p>
                 Every piece that emerges from our kilns carries the mark of human hands, the 
                 unpredictability of fire, and the story of clay transformed. We believe in the 
@@ -28,11 +45,11 @@ const AboutSection = () => {
             </div>
             <div className="mt-8 grid grid-cols-2 gap-8">
               <div>
-                <h3 className="text-3xl font-bold text-primary mb-2">500+</h3>
+                <h3 className="text-3xl font-bold text-primary mb-2">{piecesCreated}</h3>
                 <p className="text-muted-foreground">Pieces Created</p>
               </div>
               <div>
-                <h3 className="text-3xl font-bold text-primary mb-2">5</h3>
+                <h3 className="text-3xl font-bold text-primary mb-2">{yearsExperience}</h3>
                 <p className="text-muted-foreground">Years of Craft</p>
               </div>
             </div>
@@ -41,7 +58,7 @@ const AboutSection = () => {
           <div className="order-1 lg:order-2">
             <div className="relative">
               <img
-                src={processImage}
+                src={aboutImageUrl}
                 alt="Ceramic artist working at pottery wheel"
                 className="w-full h-96 lg:h-[500px] object-cover rounded-2xl ceramic-shadow"
               />

@@ -1,9 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { useBlogPosts } from "@/lib/hooks/useBlogPosts";
+import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 const JournalSection = () => {
-  const journalPosts = [
+  const { data: posts, isLoading } = useBlogPosts({ limit: 3 });
+
+  const fallbackPosts = [
     {
       title: "The Art of Ceramic Glazing",
       excerpt: "Explore the magical transformation that happens in the kiln when clay meets fire and creates beautiful ceramic glazes.",
@@ -27,6 +32,16 @@ const JournalSection = () => {
     },
   ];
 
+  const displayPosts = posts && posts.length > 0
+    ? posts.map(p => ({
+        title: p.title,
+        excerpt: p.excerpt,
+        date: format(new Date(p.published_at), "MMMM d, yyyy"),
+        readTime: `${p.read_time} min read`,
+        category: p.category?.name || "Uncategorized",
+      }))
+    : fallbackPosts;
+
   return (
     <section id="journal" className="py-12 bg-background">
       <div className="container mx-auto px-6">
@@ -40,8 +55,13 @@ const JournalSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {journalPosts.map((post, index) => (
+        {isLoading ? (
+          <div className="text-center py-12">
+            <div className="animate-pulse text-muted-foreground">Loading posts...</div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {displayPosts.map((post, index) => (
             <Card key={index} className="group hover:-translate-y-2 transition-all duration-300 border-0 bg-white shadow-lg hover:shadow-xl rounded-3xl overflow-hidden">
               <CardHeader className="p-8">
                 <div className="flex items-center gap-2 text-sm text-foreground/60 mb-4">
@@ -67,12 +87,13 @@ const JournalSection = () => {
                 </Button>
               </CardContent>
             </Card>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         <div className="text-center">
-          <Button size="lg" className="bg-foreground text-background hover:bg-foreground/90 px-12 py-6 rounded-full text-lg font-medium">
-            View All Posts
+          <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/90 px-12 py-6 rounded-full text-lg font-medium">
+            <Link to="/journal">View All Posts</Link>
           </Button>
         </div>
       </div>

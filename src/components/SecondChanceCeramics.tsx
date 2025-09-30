@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, Recycle, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 import secondChanceImage from "@/assets/second-chance-ceramics.jpg";
 
 const SecondChanceCeramics = () => {
@@ -61,8 +62,8 @@ const SecondChanceCeramics = () => {
                   Shop Second Chance
                 </a>
               </Button>
-              <Button size="lg" variant="outline">
-                Learn More
+              <Button asChild size="lg" variant="outline">
+                <Link to="/second-chance">Learn More</Link>
               </Button>
             </div>
           </div>
