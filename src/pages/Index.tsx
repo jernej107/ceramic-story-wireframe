@@ -4,8 +4,6 @@ import FeaturedCeramics from "@/components/FeaturedCeramics";
 import JournalSection from "@/components/JournalSection";
 import AboutSection from "@/components/AboutSection";
 import SecondChanceCeramics from "@/components/SecondChanceCeramics";
-import ContactForm from "@/components/ContactForm";
-import NewsletterSignup from "@/components/NewsletterSignup";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -18,8 +16,6 @@ const Index = () => {
         <JournalSection />
         <AboutSection />
         <SecondChanceCeramics />
-        <ContactForm />
-        <NewsletterSignup />
       </main>
       <Footer />
     </>

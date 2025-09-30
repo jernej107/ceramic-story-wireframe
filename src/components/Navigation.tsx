@@ -36,12 +36,6 @@ const Navigation = () => {
             >
               Shop
             </a>
-            <a 
-              href="/admin" 
-              className="text-foreground hover:text-primary transition-colors font-medium text-sm uppercase tracking-wider"
-            >
-              Admin
-            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -76,12 +70,6 @@ const Navigation = () => {
                 className="text-foreground hover:text-primary ceramic-transition font-medium text-sm uppercase tracking-wide w-fit"
               >
                 Shop
-              </a>
-              <a 
-                href="/admin" 
-                className="text-foreground hover:text-primary ceramic-transition font-medium text-sm uppercase tracking-wide w-fit"
-              >
-                Admin
               </a>
             </div>
           </div>

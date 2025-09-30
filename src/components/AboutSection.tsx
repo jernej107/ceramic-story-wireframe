@@ -1,40 +1,30 @@
-import { useStudioInfo } from "@/hooks/useStudioInfo";
 import processImage from "@/assets/ceramic-process.jpg";
 
 const AboutSection = () => {
-  const { getSection, loading } = useStudioInfo();
-  const aboutInfo = getSection('about');
-
-  const title = aboutInfo?.title || "About TFstudio";
-  const content = aboutInfo?.content || "At TFstudio, we believe in the beauty of handmade ceramics. Each piece is carefully crafted with attention to detail, blending traditional techniques with contemporary design. Our passion lies in creating functional art that brings warmth and character to everyday life.";
-
   return (
     <section id="about" className="py-12 ceramic-gradient">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="order-2 lg:order-1">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              {loading ? (
-                <div className="animate-pulse">
-                  <div className="h-12 bg-gray-200 rounded"></div>
-                </div>
-              ) : (
-                title
-              )}
+              About TFstudio
             </h2>
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
-              {loading ? (
-                <div className="animate-pulse space-y-4">
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-                </div>
-              ) : (
-                <p>{content}</p>
-              )}
+              <p>
+                Founded with a passion for handmade ceramics, TFstudio is more than just a pottery 
+                studio – it's a celebration of the ancient art of ceramics in the modern world.
+              </p>
+              <p>
+                Every piece that emerges from our kilns carries the mark of human hands, the 
+                unpredictability of fire, and the story of clay transformed. We believe in the 
+                beauty of imperfection, the warmth of handmade objects, and the joy of creating 
+                functional art for everyday life.
+              </p>
+              <p>
+                Our studio is a place where traditional techniques meet contemporary design, 
+                where each ceramic piece is born from a dialogue between the potter, the clay, 
+                and the creative spirit that guides our hands.
+              </p>
             </div>
             <div className="mt-8 grid grid-cols-2 gap-8">
               <div>
