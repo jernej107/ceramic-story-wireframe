@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchFromStrapi, StrapiImage } from '../strapi';
+import { fetchFromDirectus } from '../directus';
 
 export interface Category {
   id: number;
@@ -14,8 +14,8 @@ export interface BlogPost {
   slug: string;
   excerpt: string;
   content: string;
-  category: Category;
-  featured_image: StrapiImage;
+  category: Category | number;
+  featured_image: string;
   author: string;
   published_at: string;
   read_time: number;
@@ -30,21 +30,18 @@ export const useBlogPosts = (options: UseBlogPostsOptions = {}) => {
   return useQuery({
     queryKey: ['blog-posts', options],
     queryFn: async () => {
-      let endpoint = '/blog-posts?populate=*&sort=published_at:desc';
+      let endpoint = '/items/blog_posts?fields=*,category.*&sort=-published_at';
       
       if (options.category) {
-        endpoint += `&filters[category][slug][$eq]=${options.category}`;
+        endpoint += `&filter[category][slug][_eq]=${options.category}`;
       }
 
       if (options.limit) {
-        endpoint += `&pagination[limit]=${options.limit}`;
+        endpoint += `&limit=${options.limit}`;
       }
 
-      const response = await fetchFromStrapi(endpoint);
-      return response.data?.map((item: any) => ({
-        id: item.id,
-        ...item.attributes,
-      })) as BlogPost[];
+      const response = await fetchFromDirectus(endpoint);
+      return response.data as BlogPost[];
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
   });

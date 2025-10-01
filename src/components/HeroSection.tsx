@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useStudioInfo } from "@/lib/hooks/useStudioInfo";
-import { getStrapiImageUrl } from "@/lib/strapi";
+import { getDirectusImageUrl } from "@/lib/directus";
 import heroImage from "@/assets/hero-ceramics.jpg";
 
 const HeroSection = () => {
@@ -8,7 +8,7 @@ const HeroSection = () => {
 
   const heroTitle = studioInfo?.hero_title || "Handcrafted Ceramic Art";
   const heroDescription = studioInfo?.hero_description || "Discover unique, artisan-made ceramics that bring warmth and character to your home. Each piece tells a story of craftsmanship and creativity.";
-  const heroImageUrl = studioInfo?.hero_image ? getStrapiImageUrl(studioInfo.hero_image.url) : heroImage;
+  const heroImageUrl = studioInfo?.hero_image ? getDirectusImageUrl(studioInfo.hero_image) : heroImage;
   const shopUrl = studioInfo?.shop_url || "https://shop.tfstudio.website";
 
   if (isLoading) {

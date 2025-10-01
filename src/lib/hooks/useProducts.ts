@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchFromStrapi, StrapiImage } from '../strapi';
+import { fetchFromDirectus } from '../directus';
 
 export interface Product {
   id: number;
   name: string;
   description: string;
   price: number;
-  images: StrapiImage[];
+  images: string[];
   collection: any;
   is_second_chance: boolean;
   is_available: boolean;
@@ -21,27 +21,24 @@ export const useProducts = (options: UseProductsOptions = {}) => {
   return useQuery({
     queryKey: ['products', options],
     queryFn: async () => {
-      let endpoint = '/products?populate=*';
+      let endpoint = '/items/products?fields=*';
       
       const filters: string[] = [];
       
       if (options.secondChance !== undefined) {
-        filters.push(`filters[is_second_chance][$eq]=${options.secondChance}`);
+        filters.push(`filter[is_second_chance][_eq]=${options.secondChance}`);
       }
 
       if (options.available !== undefined) {
-        filters.push(`filters[is_available][$eq]=${options.available}`);
+        filters.push(`filter[is_available][_eq]=${options.available}`);
       }
 
       if (filters.length > 0) {
         endpoint += '&' + filters.join('&');
       }
 
-      const response = await fetchFromStrapi(endpoint);
-      return response.data?.map((item: any) => ({
-        id: item.id,
-        ...item.attributes,
-      })) as Product[];
+      const response = await fetchFromDirectus(endpoint);
+      return response.data as Product[];
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
   });

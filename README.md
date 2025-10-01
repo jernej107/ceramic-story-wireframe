@@ -1,4 +1,4 @@
-# TFStudio - React + Strapi CMS with Docker
+# TFStudio - React + Directus CMS with Docker
 
 Production-ready ceramic studio website with headless CMS. Designed for deployment with Docker on CentOS servers using Caddy as reverse proxy.
 
@@ -9,7 +9,7 @@ Production-ready ceramic studio website with headless CMS. Designed for deployme
 1. [Architecture](#-architecture)
 2. [Prerequisites](#-prerequisites)
 3. [React App Docker Setup](#-react-app-docker-setup)
-4. [Strapi CMS Installation](#-strapi-cms-installation)
+4. [Directus CMS Installation](#-directus-cms-installation)
 5. [Caddy Integration](#-caddy-integration)
 6. [Content Management](#-content-management)
 7. [Maintenance](#-maintenance)
@@ -27,8 +27,8 @@ Production-ready ceramic studio website with headless CMS. Designed for deployme
        │   Docker Network: proxy
        │                      │
 ┌──────▼──────────┐   ┌───────▼──────────┐
-│  React App      │   │  Strapi CMS      │
-│  (Port 3000)    │   │  (Port 1337)     │
+│  React App      │   │  Directus CMS    │
+│  (Port 80)      │   │  (Port 8055)     │
 │  - Docker       │   │  - Admin Panel   │
 │  - Nginx        │   │  - REST API      │
 └─────────────────┘   └────────┬─────────┘
@@ -41,7 +41,7 @@ Production-ready ceramic studio website with headless CMS. Designed for deployme
 
 **Stack:**
 - Frontend: React 18 + TypeScript + Vite + Tailwind
-- CMS: Strapi 4.x
+- CMS: Directus 10+
 - Database: PostgreSQL 15
 - Reverse Proxy: Caddy 2 (Docker container - already running)
 - Containers: Docker + Docker Compose
@@ -80,428 +80,298 @@ cd app
 
 ```bash
 cat > .env << 'EOF'
-VITE_STRAPI_URL=https://tfstudio.website
-VITE_STRAPI_API_URL=https://tfstudio.website/api
+VITE_DIRECTUS_URL=https://tfstudio.website
+VITE_DIRECTUS_API_URL=https://tfstudio.website/api
 EOF
 ```
 
-### 4. Docker Configuration
-
-The project includes `Dockerfile` and `docker-compose.yml` already configured. You just need to ensure they connect to the Caddy `proxy` network.
-
-Update your `docker-compose.yml` to connect to Caddy's network:
-
-```yaml
-version: '3.8'
-
-services:
-  tfstudio-web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: tfstudio
-    restart: unless-stopped
-    expose:
-      - "80"
-    environment:
-      - NODE_ENV=production
-    networks:
-      - proxy
-
-networks:
-  proxy:
-    external: true
-```
-
-### 5. Build and Start React App
+### 4. Build and Start React App
 
 ```bash
-# Build and start the container
 docker-compose up -d --build
+```
 
-# Verify it's running
-docker-compose ps
+### 5. Verify React App
+
+```bash
+docker ps | grep tfstudio
 docker logs tfstudio
 ```
 
 ---
 
-## 🗄️ Strapi CMS Installation
+## 📊 Directus CMS Installation
 
-### 1. Create Strapi Directory
+### 1. Create Directus Directory
 
 ```bash
-cd /srv/tfstudio
-mkdir -p strapi
-cd strapi
+mkdir -p /srv/tfstudio/directus
+cd /srv/tfstudio/directus
 ```
 
 ### 2. Generate Secure Secrets
 
-Generate random secrets for Strapi configuration:
+```bash
+# Generate random secrets for Directus
+openssl rand -base64 32  # For KEY
+openssl rand -base64 32  # For SECRET
+```
+
+### 3. Create Directus Environment File
 
 ```bash
-# Generate APP_KEYS (4 keys separated by commas)
-APP_KEY1=$(openssl rand -base64 32)
-APP_KEY2=$(openssl rand -base64 32)
-APP_KEY3=$(openssl rand -base64 32)
-APP_KEY4=$(openssl rand -base64 32)
-echo "APP_KEYS=$APP_KEY1,$APP_KEY2,$APP_KEY3,$APP_KEY4"
+cat > .env << 'EOF'
+####################################
+# Database
+####################################
+DB_CLIENT=postgres
+DB_HOST=postgres
+DB_PORT=5432
+DB_DATABASE=directus
+DB_USER=directus
+DB_PASSWORD=<GENERATE_SECURE_PASSWORD>
 
-# Generate API_TOKEN_SALT
-echo "API_TOKEN_SALT=$(openssl rand -base64 32)"
+####################################
+# Security
+####################################
+KEY=<YOUR_GENERATED_KEY>
+SECRET=<YOUR_GENERATED_SECRET>
 
-# Generate ADMIN_JWT_SECRET
-echo "ADMIN_JWT_SECRET=$(openssl rand -base64 32)"
+####################################
+# General
+####################################
+PUBLIC_URL=https://tfstudio.website
+ADMIN_EMAIL=admin@tfstudio.website
+ADMIN_PASSWORD=<GENERATE_SECURE_PASSWORD>
 
-# Generate TRANSFER_TOKEN_SALT
-echo "TRANSFER_TOKEN_SALT=$(openssl rand -base64 32)"
+####################################
+# Storage
+####################################
+STORAGE_LOCATIONS=local
+STORAGE_LOCAL_ROOT=./uploads
 
-# Generate JWT_SECRET
-echo "JWT_SECRET=$(openssl rand -base64 32)"
-
-# Generate Database Password
-echo "DATABASE_PASSWORD=$(openssl rand -base64 32 | tr -d '/+=')"
+####################################
+# CORS (for React frontend)
+####################################
+CORS_ENABLED=true
+CORS_ORIGIN=https://tfstudio.website
+EOF
 ```
 
-**Save these values securely - you'll need them in the next step!**
+**Important:** Replace the placeholder values:
+- `<GENERATE_SECURE_PASSWORD>`: Generate strong passwords
+- `<YOUR_GENERATED_KEY>` and `<YOUR_GENERATED_SECRET>`: Use the openssl commands above
 
-### 3. Create Strapi Environment File
-
-Create `.env` file in `/srv/tfstudio/strapi/`:
+### 4. Create Docker Compose Configuration
 
 ```bash
-nano .env
-```
-
-Paste the following (replace with your generated secrets from step 2):
-
-```env
-# Server Configuration
-HOST=0.0.0.0
-PORT=1337
-APP_KEYS=your_app_key_1,your_app_key_2,your_app_key_3,your_app_key_4
-API_TOKEN_SALT=your_api_token_salt
-ADMIN_JWT_SECRET=your_admin_jwt_secret
-TRANSFER_TOKEN_SALT=your_transfer_token_salt
-JWT_SECRET=your_jwt_secret
-
-# Database Configuration
-DATABASE_CLIENT=postgres
-DATABASE_HOST=postgres
-DATABASE_PORT=5432
-DATABASE_NAME=strapi
-DATABASE_USERNAME=strapi
-DATABASE_PASSWORD=your_generated_db_password
-DATABASE_SSL=false
-
-# URLs (adjust to your domain)
-URL=https://tfstudio.website
-ADMIN_URL=https://tfstudio.website/admin
-```
-
-### 4. Create Strapi Docker Compose
-
-Create `docker-compose.yml` in `/srv/tfstudio/strapi/`:
-
-```bash
-nano docker-compose.yml
-```
-
-```yaml
+cat > docker-compose.yml << 'EOF'
 version: '3.8'
 
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: tfstudio-postgres
+    container_name: directus-postgres
     restart: unless-stopped
-    environment:
-      POSTGRES_DB: strapi
-      POSTGRES_USER: strapi
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - ./data/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     networks:
-      - strapi-network
+      - directus-network
 
-  strapi:
-    image: strapi/strapi:latest
-    container_name: tfstudio-strapi
+  directus:
+    image: directus/directus:10
+    container_name: directus-cms
     restart: unless-stopped
-    expose:
-      - "1337"
-    environment:
-      - NODE_ENV=production
-    env_file:
-      - .env
+    ports:
+      - "8055:8055"
     volumes:
-      - ./app:/srv/app
-      - strapi-uploads:/srv/app/public/uploads
+      - ./uploads:/directus/uploads
+      - ./extensions:/directus/extensions
     depends_on:
       - postgres
+    env_file:
+      - .env
     networks:
-      - strapi-network
+      - directus-network
       - proxy
 
-volumes:
-  postgres-data:
-  strapi-uploads:
-
 networks:
-  strapi-network:
+  directus-network:
+    driver: bridge
   proxy:
     external: true
+EOF
 ```
 
-### 5. Launch Strapi Services
+### 5. Launch Directus Services
 
 ```bash
-cd /srv/tfstudio/strapi
-docker compose up -d
+docker-compose up -d
 ```
 
-Watch the logs to ensure Strapi starts successfully:
+### 6. Verify Directus Startup
 
 ```bash
-docker logs -f tfstudio-strapi
+# Check logs
+docker logs directus-cms -f
+
+# Check if services are running
+docker ps | grep directus
 ```
 
-Wait until you see: `Server started on port 1337`
+Wait for the message: "Server started at port 8055"
 
-### 6. Initialize Strapi Admin
+### 7. Access Directus Admin
 
-1. Access Strapi admin panel: `https://tfstudio.website/admin`
-2. Create your admin account (first user becomes super admin)
-3. Complete the registration form
-
-### 7. Create Content Types
-
-In the Strapi admin panel, create the following content types:
-
-#### A. Studio Info (Single Type)
-
-1. Go to **Content-Type Builder** → **Create new single type**
-2. Name it: `Studio Info`
-3. Add these fields:
-
-| Field Name | Type | Options |
-|------------|------|---------|
-| hero_title | Text | Required |
-| hero_subtitle | Text | Optional |
-| hero_description | Rich Text (Markdown) | Required |
-| hero_image | Media (Single) | Required |
-| about_title | Text | Required |
-| about_description | Rich Text (Markdown) | Required |
-| about_image | Media (Single) | Required |
-| years_experience | Text | Required |
-| pieces_created | Text | Required |
-| shop_url | Text | Required |
-
-4. Click **Save** and wait for server restart
-
-#### B. Categories (Collection Type)
-
-1. Create new collection type: `Category`
-2. Add fields:
-
-| Field Name | Type | Options |
-|------------|------|---------|
-| name | Text | Required, Unique |
-| slug | UID (attached to name) | Required |
-| type | Enumeration | Values: blog, product; Default: blog |
-
-3. Click **Save**
-
-#### C. Collections (Collection Type)
-
-1. Create new collection type: `Collection`
-2. Add fields:
-
-| Field Name | Type | Options |
-|------------|------|---------|
-| name | Text | Required |
-| description | Rich Text (Markdown) | Optional |
-| featured_image | Media (Single) | Required |
-| gallery_images | Media (Multiple) | Optional |
-| display_order | Number (integer) | Default: 0 |
-| is_featured | Boolean | Default: false |
-
-3. Click **Save**
-
-#### D. Blog Posts (Collection Type)
-
-1. Create new collection type: `Blog Post`
-2. Add fields:
-
-| Field Name | Type | Options |
-|------------|------|---------|
-| title | Text | Required |
-| slug | UID (attached to title) | Required |
-| excerpt | Text (Long text) | Required |
-| content | Rich Text (Markdown) | Required |
-| category | Relation | Blog Post (many) to Category (one) |
-| featured_image | Media (Single) | Required |
-| author | Text | Required |
-| published_at | DateTime | Default: now |
-| read_time | Number (integer) | Default: 5 |
-
-3. Click **Save**
-
-#### E. Products (Collection Type) - Optional
-
-1. Create new collection type: `Product`
-2. Add fields:
-
-| Field Name | Type | Options |
-|------------|------|---------|
-| name | Text | Required |
-| slug | UID (attached to name) | Required |
-| description | Rich Text (Markdown) | Required |
-| price | Decimal | Required |
-| images | Media (Multiple) | Required |
-| category | Relation | Product (many) to Category (one) |
-| collection | Relation | Product (many) to Collection (one) |
-| is_available | Boolean | Default: true |
-| is_second_chance | Boolean | Default: false |
-| stock_quantity | Number (integer) | Default: 0 |
-
-3. Click **Save**
-
-### 8. Configure Public Permissions
-
-**Important:** Make content publicly accessible:
-
-1. Go to **Settings** → **Users & Permissions Plugin** → **Roles**
-2. Click on **Public** role
-3. For each content type, enable:
-   - ✅ `find` (list all entries)
-   - ✅ `findOne` (get single entry)
-4. Click **Save**
-
-### 9. Add Your Content
-
-Now populate Strapi with your content:
-
-1. **Upload Images**: Go to Media Library and upload your ceramic images
-2. **Create Categories**: Add categories like "Process", "Inspiration", "Techniques" (blog) and "Bowls", "Plates", "Vases" (product)
-3. **Studio Info**: Fill in your studio information (hero section, about section, stats)
-4. **Collections**: Add your ceramic collections with featured images
-5. **Blog Posts**: Write and publish blog posts about your process
-6. **Products**: Add products with images, prices, and descriptions (optional)
+1. Navigate to `https://tfstudio.website/admin` (after updating Caddy - see next section)
+2. Login with credentials from your `.env` file:
+   - Email: Value of `ADMIN_EMAIL`
+   - Password: Value of `ADMIN_PASSWORD`
 
 ---
 
-## 🔀 Caddy Integration
+## 🔌 Caddy Integration
 
-Since you already have Caddy running in Docker, update your Caddyfile at `/srv/tfstudio/caddy/Caddyfile`:
+### Update Caddyfile
 
-### Updated Caddyfile Configuration
-
-```caddyfile
-# Redirect www → apex
-www.tfstudio.website {
-    redir https://tfstudio.website{uri} permanent
-}
-
-tfstudio.website {
-    # Strapi CMS routes (must come first for specific matching)
-    reverse_proxy /api/* tfstudio-strapi:1337
-    reverse_proxy /admin* tfstudio-strapi:1337
-    reverse_proxy /uploads/* tfstudio-strapi:1337
-    reverse_proxy /graphql tfstudio-strapi:1337
-    
-    # React Frontend (default/fallback)
-    reverse_proxy tfstudio:80
-    
-    encode zstd gzip
-    
-    # Security headers
-    header {
-        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-        X-Content-Type-Options "nosniff"
-        X-Frame-Options "SAMEORIGIN"
-        Referrer-Policy "no-referrer-when-downgrade"
-    }
-}
-```
-
-### Reload Caddy Container
+Add Directus proxying to your existing Caddyfile:
 
 ```bash
-# Reload Caddy configuration
-docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+# Assuming your Caddy configuration is at /srv/caddy/Caddyfile
+cat >> /srv/caddy/Caddyfile << 'EOF'
 
-# Or restart the container
-docker restart caddy
+tfstudio.website {
+    # Directus Admin and API
+    handle /admin* {
+        reverse_proxy directus-cms:8055
+    }
+    
+    handle /api* {
+        reverse_proxy directus-cms:8055
+    }
+    
+    handle /assets* {
+        reverse_proxy directus-cms:8055
+    }
+    
+    # React Frontend (default)
+    handle {
+        reverse_proxy tfstudio:80
+    }
+}
+EOF
+```
 
-# Check logs
-docker logs caddy
+### Reload Caddy Configuration
+
+```bash
+# Get Caddy container name
+docker ps | grep caddy
+
+# Reload Caddy (replace caddy-container with actual name)
+docker exec caddy-container caddy reload --config /etc/caddy/Caddyfile
+
+# Or restart Caddy container
+docker restart caddy-container
 ```
 
 ---
 
 ## 📝 Content Management
 
-### Content Types in Strapi
+### Content Collections Structure
 
-Your Strapi CMS includes these content types:
+Create the following collections in Directus admin panel:
 
-#### 1. Studio Info (Single Type)
-Global information for homepage and about page.
+#### 1. **Studio Info** (`studio_info`)
 
-**Fields:**
-- `hero_title`, `hero_subtitle`, `hero_description`
-- `hero_image`, `about_image`
-- `about_title`, `about_description`
-- `years_experience`, `pieces_created`
-- `shop_url`
+| Field Name | Type | Options |
+|------------|------|---------|
+| `id` | UUID | Primary Key |
+| `hero_title` | String | Required |
+| `hero_subtitle` | String | Optional |
+| `hero_description` | Text | Required |
+| `hero_image` | File | Image, Required |
+| `about_title` | String | Required |
+| `about_description` | Text | Required |
+| `about_image` | File | Image, Required |
+| `years_experience` | String | Required |
+| `pieces_created` | String | Required |
+| `shop_url` | String | Required, URL |
 
-#### 2. Collections
-Ceramic collections featured on homepage.
+**Permissions:** Public read access
 
-**Fields:**
-- `name`, `description`
-- `featured_image`, `gallery_images`
-- `display_order`, `is_featured`
+#### 2. **Categories** (`categories`)
 
-#### 3. Blog Posts
-Journal entries and articles.
+| Field Name | Type | Options |
+|------------|------|---------|
+| `id` | Integer | Primary Key, Auto-increment |
+| `name` | String | Required |
+| `slug` | String | Required, Unique |
+| `type` | Dropdown | Values: `blog`, `product` |
 
-**Fields:**
-- `title`, `slug`, `excerpt`, `content`
-- `category`, `featured_image`
-- `author`, `published_at`, `read_time`
+**Permissions:** Public read access
 
-#### 4. Products
-Individual ceramic pieces.
+#### 3. **Collections** (`collections`)
 
-**Fields:**
-- `name`, `description`, `price`
-- `images`, `collection`
-- `is_second_chance`, `is_available`
+| Field Name | Type | Options |
+|------------|------|---------|
+| `id` | Integer | Primary Key, Auto-increment |
+| `name` | String | Required |
+| `description` | Text | Optional |
+| `featured_image` | File | Image, Required |
+| `gallery_images` | Files | Multiple Images |
+| `display_order` | Integer | Default: 0 |
+| `is_featured` | Boolean | Default: false |
 
-#### 5. Categories
-Organize blog posts and products.
+**Permissions:** Public read access
 
-**Fields:**
-- `name`, `slug`, `type` (blog/product)
+#### 4. **Blog Posts** (`blog_posts`)
 
-### Adding Content
+| Field Name | Type | Options |
+|------------|------|---------|
+| `id` | Integer | Primary Key, Auto-increment |
+| `title` | String | Required |
+| `slug` | String | Required, Unique |
+| `excerpt` | Text | Required |
+| `content` | Text | Required, WYSIWYG |
+| `category` | Many-to-One | Related to Categories |
+| `featured_image` | File | Image, Required |
+| `author` | String | Required |
+| `published_at` | DateTime | Required |
+| `read_time` | Integer | Required (in minutes) |
 
-1. Go to `https://yourdomain.com/admin`
-2. Navigate to **Content Manager**
-3. Select content type
-4. Click **Create new entry**
-5. Fill fields, upload images
-6. **Save** and **Publish**
+**Permissions:** Public read access
 
-### Media Management
+#### 5. **Products** (`products`)
 
-- Upload via Media Library or directly in entries
-- Formats: JPG, PNG, GIF, SVG, WebP
-- Auto-generated thumbnails
-- Stored in Docker volume `strapi_uploads`
+| Field Name | Type | Options |
+|------------|------|---------|
+| `id` | Integer | Primary Key, Auto-increment |
+| `name` | String | Required |
+| `description` | Text | Required |
+| `price` | Decimal | Required |
+| `images` | Files | Multiple Images, Required |
+| `collection` | Many-to-One | Related to Collections |
+| `is_second_chance` | Boolean | Default: false |
+| `is_available` | Boolean | Default: true |
+
+**Permissions:** Public read access
+
+### Setting Up Collections
+
+1. **Access Directus Admin Panel**: Navigate to `https://tfstudio.website/admin`
+2. **Go to Settings → Data Model**
+3. **Create each collection** following the structure above
+4. **Configure Permissions**:
+   - Go to Settings → Roles & Permissions
+   - Select "Public" role
+   - Enable "Read" permission for all collections
+5. **Add Content**: Navigate to each collection and add items
 
 ---
 
@@ -510,331 +380,154 @@ Organize blog posts and products.
 ### View Logs
 
 ```bash
-# React app logs
-docker logs tfstudio
+# React App
+docker logs tfstudio -f
 
-# Strapi logs
-cd /srv/tfstudio/strapi
-docker-compose logs -f strapi
+# Directus
+docker logs directus-cms -f
 
-# PostgreSQL logs
-docker-compose logs -f postgres
-
-# Caddy logs
-docker logs caddy
-
-# Last 100 lines
-docker logs --tail=100 tfstudio
+# PostgreSQL
+docker logs directus-postgres -f
 ```
 
 ### Database Backup
 
 ```bash
-# Create backup script
-cat > /usr/local/bin/backup-tfstudio.sh << 'EOF'
-#!/bin/bash
-BACKUP_DIR="/var/backups/tfstudio"
-DATE=$(date +%Y%m%d_%H%M%S)
-mkdir -p $BACKUP_DIR
+# Create backup directory
+mkdir -p /srv/tfstudio/backups
 
-cd /srv/tfstudio/strapi
-docker-compose exec -T postgres \
-  pg_dump -U strapi strapi | gzip > $BACKUP_DIR/db_$DATE.sql.gz
-
-# Keep last 7 days
-find $BACKUP_DIR -name "db_*.sql.gz" -mtime +7 -delete
-
-echo "Backup: $BACKUP_DIR/db_$DATE.sql.gz"
-EOF
-
-chmod +x /usr/local/bin/backup-tfstudio.sh
-
-# Add daily cron (2 AM)
-echo "0 2 * * * root /usr/local/bin/backup-tfstudio.sh" >> /etc/crontab
-
-# Run manual backup
-/usr/local/bin/backup-tfstudio.sh
+# Backup PostgreSQL database
+docker exec directus-postgres pg_dump -U directus directus > /srv/tfstudio/backups/directus_backup_$(date +%Y%m%d_%H%M%S).sql
 ```
 
-### Restore Database
+### Database Restore
 
 ```bash
-cd /srv/tfstudio/strapi
-
-gunzip -c /var/backups/tfstudio/db_20240101_020000.sql.gz | \
-  docker-compose exec -T postgres psql -U strapi strapi
+# Restore from backup
+cat /srv/tfstudio/backups/directus_backup_YYYYMMDD_HHMMSS.sql | docker exec -i directus-postgres psql -U directus directus
 ```
 
-### Backup Media Files
+### Media Files Backup
 
 ```bash
-BACKUP_DIR="/var/backups/tfstudio"
-DATE=$(date +%Y%m%d_%H%M%S)
-
-# Backup
-docker run --rm \
-  --volumes-from tfstudio-strapi \
-  -v $BACKUP_DIR:/backup \
-  alpine tar czf /backup/uploads_$DATE.tar.gz -C /app/public uploads
-
-# Restore
-docker run --rm \
-  --volumes-from tfstudio-strapi \
-  -v $BACKUP_DIR:/backup \
-  alpine tar xzf /backup/uploads_20240101.tar.gz -C /app/public
+# Backup Directus uploads
+tar -czf /srv/tfstudio/backups/directus_uploads_$(date +%Y%m%d_%H%M%S).tar.gz -C /srv/tfstudio/directus ./uploads
 ```
 
 ### Update Application
 
 ```bash
-# Update React app
+# Update React App
 cd /srv/tfstudio/app
-git pull origin main
+git pull
 docker-compose up -d --build
 
-# Update Strapi
-cd /srv/tfstudio/strapi
-docker-compose pull strapi
+# Update Directus
+cd /srv/tfstudio/directus
+docker-compose pull
 docker-compose up -d
-
-# Clean old images
-docker image prune -f
-```
-
-### Monitor Resources
-
-```bash
-# Container stats
-docker stats
-
-# Disk usage
-docker system df
-
-# Server resources
-htop
-
-# Disk space
-df -h
 ```
 
 ### Restart Services
 
 ```bash
-# Restart React app
-cd /srv/tfstudio/app
+# Restart React App
+docker restart tfstudio
+
+# Restart Directus
+docker restart directus-cms
+
+# Restart all Directus services
+cd /srv/tfstudio/directus
 docker-compose restart
-
-# Restart Strapi
-cd /srv/tfstudio/strapi
-docker-compose restart strapi
-
-# Restart Caddy
-docker restart caddy
-
-# Stop all
-docker stop tfstudio caddy
-cd /srv/tfstudio/strapi
-docker-compose down
-
-# Start all
-docker start tfstudio caddy
-cd /srv/tfstudio/strapi
-docker-compose up -d
 ```
 
 ---
 
 ## 🐛 Troubleshooting
 
-### Frontend Not Loading
+### React App Not Loading
 
-```bash
-# Check logs
-docker-compose logs frontend
+1. Check container status: `docker ps | grep tfstudio`
+2. Check logs: `docker logs tfstudio`
+3. Verify environment variables: `docker exec tfstudio env | grep VITE`
+4. Check Caddy routing: `docker logs caddy-container`
 
-# Check if running
-docker ps | grep frontend
+### Can't Access Directus Admin
 
-# Rebuild
-docker-compose up -d --build --no-cache frontend
+1. Verify Directus is running: `docker ps | grep directus-cms`
+2. Check logs: `docker logs directus-cms`
+3. Verify Caddy routing for `/admin` path
+4. Check CORS settings in Directus `.env`
 
-# Test internally
-curl http://localhost:3000
-```
+### Database Connection Errors
 
-### Strapi Not Accessible
-
-```bash
-# Check logs
-docker-compose logs strapi
-
-# Check database connection
-docker-compose logs postgres
-
-# Restart Strapi
-docker-compose restart strapi
-
-# Check port
-netstat -tulpn | grep 1337
-```
-
-### Database Connection Issues
-
-```bash
-# Check postgres is running
-docker-compose ps postgres
-
-# Check logs
-docker-compose logs postgres
-
-# Connect to database manually
-docker-compose exec postgres psql -U strapi -d strapi
-
-# Reset database (WARNING: deletes all data)
-docker-compose down -v
-docker-compose up -d
-```
+1. Check PostgreSQL: `docker ps | grep directus-postgres`
+2. Check database logs: `docker logs directus-postgres`
+3. Verify database credentials in `.env`
+4. Test connection: `docker exec directus-postgres psql -U directus -d directus -c "SELECT 1"`
 
 ### Caddy Not Proxying Correctly
 
-```bash
-# Check Caddy logs
-docker logs caddy
+1. Check Caddy logs: `docker logs caddy-container`
+2. Verify all containers are on `proxy` network:
+   ```bash
+   docker network inspect proxy
+   ```
+3. Test direct access:
+   - React: `curl http://localhost:80` (from inside tfstudio container)
+   - Directus: `curl http://localhost:8055` (from inside directus-cms container)
 
-# Validate config inside container
-docker exec caddy caddy validate --config /etc/caddy/Caddyfile
-
-# Reload Caddy
-docker exec caddy caddy reload --config /etc/caddy/Caddyfile
-
-# Or restart
-docker restart caddy
-
-# Test connectivity from Caddy to app containers
-docker exec caddy wget -O- http://tfstudio:80
-docker exec caddy wget -O- http://tfstudio-strapi:1337
-```
-
-### Firewall Issues on CentOS
+### Firewall Issues
 
 ```bash
-# Check firewall status
-firewall-cmd --list-all
-
-# Open ports if needed
+# Open required ports
 firewall-cmd --permanent --add-service=http
 firewall-cmd --permanent --add-service=https
 firewall-cmd --reload
-
-# Test port accessibility
-curl -I http://localhost:3000
-curl -I http://localhost:1337
 ```
 
-### SELinux Blocking Docker
+### SELinux Issues (CentOS)
 
 ```bash
-# Check SELinux status
-getenforce
-
-# Set permissive (temporary)
-setenforce 0
-
-# Configure policies (recommended)
-setsebool -P httpd_can_network_connect 1
-setsebool -P httpd_can_network_relay 1
+# If SELinux is blocking Docker
+setsebool -P container_manage_cgroup on
+semanage fcontext -a -t container_file_t "/srv/tfstudio(/.*)?"
+restorecon -Rv /srv/tfstudio
 ```
 
 ### High Memory Usage
 
 ```bash
-# Check usage
+# Check resource usage
 docker stats
 
-# Limit container resources (add to docker-compose.yml)
-services:
-  strapi:
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 2G
-        reservations:
-          memory: 1G
+# Limit Directus memory (in docker-compose.yml)
+directus:
+  deploy:
+    resources:
+      limits:
+        memory: 1G
 ```
 
 ### SSL Certificate Issues
 
-Caddy handles SSL automatically. If issues occur:
-
 ```bash
-# Check Caddy logs for certificate errors
-docker logs caddy | grep -i certificate
-
-# Force certificate renewal by restarting
-docker restart caddy
-
-# Verify domain DNS
-dig tfstudio.website
-
-# Check ports are accessible externally
-telnet tfstudio.website 443
-
-# Ensure Caddy data volume persists certificates
-docker volume inspect caddy_data
+# Force SSL renewal with Caddy
+docker exec caddy-container caddy reload --force
 ```
 
 ---
 
 ## 📚 Additional Resources
 
-- **React Query**: Data fetching hooks in `src/lib/hooks/`
-- **Strapi Docs**: https://docs.strapi.io
-- **Caddy Docs**: https://caddyserver.com/docs
-- **Docker Compose**: https://docs.docker.com/compose/
+- [Directus Documentation](https://docs.directus.io)
+- [Docker Documentation](https://docs.docker.com)
+- [Caddy Documentation](https://caddyserver.com/docs)
+- [React Query Documentation](https://tanstack.com/query)
 
 ---
 
-## 🚀 Quick Commands Reference
+## 📄 License
 
-```bash
-# Start React app
-cd /srv/tfstudio/app && docker-compose up -d
-
-# Start Strapi
-cd /srv/tfstudio/strapi && docker-compose up -d
-
-# Start Caddy
-docker start caddy
-
-# View logs
-docker logs tfstudio
-docker logs caddy
-cd /srv/tfstudio/strapi && docker-compose logs -f
-
-# Restart services
-docker restart tfstudio
-docker restart caddy
-cd /srv/tfstudio/strapi && docker-compose restart
-
-# Check status
-docker ps
-
-# Update React app
-cd /srv/tfstudio/app && git pull && docker-compose up -d --build
-
-# Backup database
-/usr/local/bin/backup-tfstudio.sh
-
-# Clean up
-docker system prune -a
-```
-
----
-
-**Your site will be available at:**
-- 🌐 Frontend: `https://tfstudio.website`
-- 🎨 Strapi Admin: `https://tfstudio.website/admin`
-- 🔌 API: `https://tfstudio.website/api`
-
-Caddy Docker container automatically handles HTTPS with Let's Encrypt certificates!
+This project is proprietary. All rights reserved.

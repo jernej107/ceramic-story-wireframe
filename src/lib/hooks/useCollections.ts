@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchFromStrapi, StrapiImage } from '../strapi';
+import { fetchFromDirectus } from '../directus';
 
 export interface Collection {
   id: number;
   name: string;
   description?: string;
-  featured_image: StrapiImage;
-  gallery_images?: StrapiImage[];
+  featured_image: string;
+  gallery_images?: string[];
   display_order: number;
   is_featured: boolean;
 }
@@ -19,17 +19,14 @@ export const useCollections = (options: UseCollectionsOptions = {}) => {
   return useQuery({
     queryKey: ['collections', options],
     queryFn: async () => {
-      let endpoint = '/collections?populate=*&sort=display_order:asc';
+      let endpoint = '/items/collections?fields=*&sort=display_order';
       
       if (options.featured) {
-        endpoint += '&filters[is_featured][$eq]=true';
+        endpoint += '&filter[is_featured][_eq]=true';
       }
 
-      const response = await fetchFromStrapi(endpoint);
-      return response.data?.map((item: any) => ({
-        id: item.id,
-        ...item.attributes,
-      })) as Collection[];
+      const response = await fetchFromDirectus(endpoint);
+      return response.data as Collection[];
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
   });

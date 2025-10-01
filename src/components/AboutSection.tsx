@@ -1,13 +1,13 @@
 import processImage from "@/assets/ceramic-process.jpg";
 import { useStudioInfo } from "@/lib/hooks/useStudioInfo";
-import { getStrapiImageUrl } from "@/lib/strapi";
+import { getDirectusImageUrl } from "@/lib/directus";
 
 const AboutSection = () => {
   const { data: studioInfo, isLoading } = useStudioInfo();
 
   const aboutTitle = studioInfo?.about_title || "About TFstudio";
   const aboutDescription = studioInfo?.about_description || "Founded with a passion for handmade ceramics, TFstudio is more than just a pottery studio – it's a celebration of the ancient art of ceramics in the modern world.";
-  const aboutImageUrl = studioInfo?.about_image ? getStrapiImageUrl(studioInfo.about_image.url) : processImage;
+  const aboutImageUrl = studioInfo?.about_image ? getDirectusImageUrl(studioInfo.about_image) : processImage;
   const piecesCreated = studioInfo?.pieces_created || "500+";
   const yearsExperience = studioInfo?.years_experience || "5";
 

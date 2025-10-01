@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useCollections } from "@/lib/hooks/useCollections";
 import { useStudioInfo } from "@/lib/hooks/useStudioInfo";
-import { getStrapiImageUrl } from "@/lib/strapi";
+import { getDirectusImageUrl } from "@/lib/directus";
 import collection1 from "@/assets/ceramic-collection-1.jpg";
 import collection2 from "@/assets/ceramic-collection-2.jpg";
 import collection3 from "@/assets/ceramic-collection-3.jpg";
@@ -19,7 +19,7 @@ const FeaturedCeramics = () => {
   const displayCollections = collections && collections.length > 0 
     ? collections.slice(0, 3).map(c => ({
         name: c.name,
-        image: c.featured_image ? getStrapiImageUrl(c.featured_image.url) : collection1
+        image: c.featured_image ? getDirectusImageUrl(c.featured_image) : collection1
       }))
     : fallbackCollections;
 

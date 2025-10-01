@@ -38,7 +38,7 @@ const JournalSection = () => {
         excerpt: p.excerpt,
         date: format(new Date(p.published_at), "MMMM d, yyyy"),
         readTime: `${p.read_time} min read`,
-        category: p.category?.name || "Uncategorized",
+        category: typeof p.category === 'object' && p.category !== null && 'name' in p.category ? p.category.name : "Uncategorized",
       }))
     : fallbackPosts;
 
