@@ -138,44 +138,77 @@ cd strapi
 
 ### 2. Generate Secure Secrets
 
+Generate random secrets for Strapi configuration:
+
 ```bash
-APP_KEYS=$(openssl rand -base64 32)
-API_TOKEN_SALT=$(openssl rand -base64 32)
-ADMIN_JWT_SECRET=$(openssl rand -base64 64)
-JWT_SECRET=$(openssl rand -base64 64)
-DB_PASSWORD=$(openssl rand -base64 32)
+# Generate APP_KEYS (4 keys separated by commas)
+APP_KEY1=$(openssl rand -base64 32)
+APP_KEY2=$(openssl rand -base64 32)
+APP_KEY3=$(openssl rand -base64 32)
+APP_KEY4=$(openssl rand -base64 32)
+echo "APP_KEYS=$APP_KEY1,$APP_KEY2,$APP_KEY3,$APP_KEY4"
+
+# Generate API_TOKEN_SALT
+echo "API_TOKEN_SALT=$(openssl rand -base64 32)"
+
+# Generate ADMIN_JWT_SECRET
+echo "ADMIN_JWT_SECRET=$(openssl rand -base64 32)"
+
+# Generate TRANSFER_TOKEN_SALT
+echo "TRANSFER_TOKEN_SALT=$(openssl rand -base64 32)"
+
+# Generate JWT_SECRET
+echo "JWT_SECRET=$(openssl rand -base64 32)"
+
+# Generate Database Password
+echo "DATABASE_PASSWORD=$(openssl rand -base64 32 | tr -d '/+=')"
 ```
+
+**Save these values securely - you'll need them in the next step!**
 
 ### 3. Create Strapi Environment File
 
+Create `.env` file in `/srv/tfstudio/strapi/`:
+
 ```bash
-cat > .env << EOF
+nano .env
+```
+
+Paste the following (replace with your generated secrets from step 2):
+
+```env
+# Server Configuration
 HOST=0.0.0.0
 PORT=1337
-APP_KEYS=$APP_KEYS
-API_TOKEN_SALT=$API_TOKEN_SALT
-ADMIN_JWT_SECRET=$ADMIN_JWT_SECRET
-JWT_SECRET=$JWT_SECRET
+APP_KEYS=your_app_key_1,your_app_key_2,your_app_key_3,your_app_key_4
+API_TOKEN_SALT=your_api_token_salt
+ADMIN_JWT_SECRET=your_admin_jwt_secret
+TRANSFER_TOKEN_SALT=your_transfer_token_salt
+JWT_SECRET=your_jwt_secret
 
-# Database
+# Database Configuration
 DATABASE_CLIENT=postgres
 DATABASE_HOST=postgres
 DATABASE_PORT=5432
 DATABASE_NAME=strapi
 DATABASE_USERNAME=strapi
-DATABASE_PASSWORD=$DB_PASSWORD
+DATABASE_PASSWORD=your_generated_db_password
 DATABASE_SSL=false
 
-NODE_ENV=production
-EOF
+# URLs (adjust to your domain)
+URL=https://tfstudio.website
+ADMIN_URL=https://tfstudio.website/admin
 ```
 
 ### 4. Create Strapi Docker Compose
 
-Create a separate `docker-compose.strapi.yml` in `/srv/tfstudio/strapi/`:
+Create `docker-compose.yml` in `/srv/tfstudio/strapi/`:
 
 ```bash
-cat > docker-compose.yml << 'EOF'
+nano docker-compose.yml
+```
+
+```yaml
 version: '3.8'
 
 services:
@@ -186,60 +219,176 @@ services:
     environment:
       POSTGRES_DB: strapi
       POSTGRES_USER: strapi
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     networks:
-      - proxy
+      - strapi-network
 
   strapi:
     image: strapi/strapi:latest
     container_name: tfstudio-strapi
     restart: unless-stopped
-    env_file:
-      - .env
     expose:
       - "1337"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env
     volumes:
       - ./app:/srv/app
-      - strapi_uploads:/srv/app/public/uploads
+      - strapi-uploads:/srv/app/public/uploads
     depends_on:
       - postgres
     networks:
+      - strapi-network
       - proxy
 
 volumes:
-  postgres_data:
-  strapi_uploads:
+  postgres-data:
+  strapi-uploads:
 
 networks:
+  strapi-network:
   proxy:
     external: true
-EOF
 ```
 
 ### 5. Launch Strapi Services
 
 ```bash
 cd /srv/tfstudio/strapi
-
-# Start Strapi and PostgreSQL
-docker-compose up -d
-
-# Check status
-docker-compose ps
-
-# View logs
-docker-compose logs -f strapi
+docker compose up -d
 ```
+
+Watch the logs to ensure Strapi starts successfully:
+
+```bash
+docker logs -f tfstudio-strapi
+```
+
+Wait until you see: `Server started on port 1337`
 
 ### 6. Initialize Strapi Admin
 
-1. Visit `https://tfstudio.website/admin`
-2. Create admin account
-3. Start adding content
+1. Access Strapi admin panel: `https://tfstudio.website/admin`
+2. Create your admin account (first user becomes super admin)
+3. Complete the registration form
 
-**Note:** After Caddy configuration update in the previous section, Strapi will be accessible through the main domain.
+### 7. Create Content Types
+
+In the Strapi admin panel, create the following content types:
+
+#### A. Studio Info (Single Type)
+
+1. Go to **Content-Type Builder** → **Create new single type**
+2. Name it: `Studio Info`
+3. Add these fields:
+
+| Field Name | Type | Options |
+|------------|------|---------|
+| hero_title | Text | Required |
+| hero_subtitle | Text | Optional |
+| hero_description | Rich Text (Markdown) | Required |
+| hero_image | Media (Single) | Required |
+| about_title | Text | Required |
+| about_description | Rich Text (Markdown) | Required |
+| about_image | Media (Single) | Required |
+| years_experience | Text | Required |
+| pieces_created | Text | Required |
+| shop_url | Text | Required |
+
+4. Click **Save** and wait for server restart
+
+#### B. Categories (Collection Type)
+
+1. Create new collection type: `Category`
+2. Add fields:
+
+| Field Name | Type | Options |
+|------------|------|---------|
+| name | Text | Required, Unique |
+| slug | UID (attached to name) | Required |
+| type | Enumeration | Values: blog, product; Default: blog |
+
+3. Click **Save**
+
+#### C. Collections (Collection Type)
+
+1. Create new collection type: `Collection`
+2. Add fields:
+
+| Field Name | Type | Options |
+|------------|------|---------|
+| name | Text | Required |
+| description | Rich Text (Markdown) | Optional |
+| featured_image | Media (Single) | Required |
+| gallery_images | Media (Multiple) | Optional |
+| display_order | Number (integer) | Default: 0 |
+| is_featured | Boolean | Default: false |
+
+3. Click **Save**
+
+#### D. Blog Posts (Collection Type)
+
+1. Create new collection type: `Blog Post`
+2. Add fields:
+
+| Field Name | Type | Options |
+|------------|------|---------|
+| title | Text | Required |
+| slug | UID (attached to title) | Required |
+| excerpt | Text (Long text) | Required |
+| content | Rich Text (Markdown) | Required |
+| category | Relation | Blog Post (many) to Category (one) |
+| featured_image | Media (Single) | Required |
+| author | Text | Required |
+| published_at | DateTime | Default: now |
+| read_time | Number (integer) | Default: 5 |
+
+3. Click **Save**
+
+#### E. Products (Collection Type) - Optional
+
+1. Create new collection type: `Product`
+2. Add fields:
+
+| Field Name | Type | Options |
+|------------|------|---------|
+| name | Text | Required |
+| slug | UID (attached to name) | Required |
+| description | Rich Text (Markdown) | Required |
+| price | Decimal | Required |
+| images | Media (Multiple) | Required |
+| category | Relation | Product (many) to Category (one) |
+| collection | Relation | Product (many) to Collection (one) |
+| is_available | Boolean | Default: true |
+| is_second_chance | Boolean | Default: false |
+| stock_quantity | Number (integer) | Default: 0 |
+
+3. Click **Save**
+
+### 8. Configure Public Permissions
+
+**Important:** Make content publicly accessible:
+
+1. Go to **Settings** → **Users & Permissions Plugin** → **Roles**
+2. Click on **Public** role
+3. For each content type, enable:
+   - ✅ `find` (list all entries)
+   - ✅ `findOne` (get single entry)
+4. Click **Save**
+
+### 9. Add Your Content
+
+Now populate Strapi with your content:
+
+1. **Upload Images**: Go to Media Library and upload your ceramic images
+2. **Create Categories**: Add categories like "Process", "Inspiration", "Techniques" (blog) and "Bowls", "Plates", "Vases" (product)
+3. **Studio Info**: Fill in your studio information (hero section, about section, stats)
+4. **Collections**: Add your ceramic collections with featured images
+5. **Blog Posts**: Write and publish blog posts about your process
+6. **Products**: Add products with images, prices, and descriptions (optional)
 
 ---
 
