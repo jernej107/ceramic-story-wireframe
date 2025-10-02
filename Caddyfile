@@ -1,0 +1,25 @@
+# Redirect www → apex
+www.tfstudio.website {
+    redir https://tfstudio.website{uri} permanent
+}
+
+tfstudio.website {
+    # Directus CMS routes (must come first for specific matching)
+    reverse_proxy /admin* tfstudio-directus:8055
+    reverse_proxy /api/* tfstudio-directus:8055
+    reverse_proxy /assets/* tfstudio-directus:8055
+    
+    # React Frontend (default/fallback)
+    reverse_proxy tfstudio:80
+    
+    encode zstd gzip
+    
+    # Security headers
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "no-referrer-when-downgrade"
+    }
+}
+
