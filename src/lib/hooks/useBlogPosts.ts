@@ -16,9 +16,11 @@ export interface BlogPost {
   content: string;
   category: Category | number;
   featured_image: string;
+  featured_image_url: string;
   author: string;
   published_at: string;
   read_time: number;
+  read_time_minutes: number;
 }
 
 interface UseBlogPostsOptions {
