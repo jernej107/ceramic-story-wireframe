@@ -26,7 +26,7 @@ const FeaturedCeramics = () => {
   const shopUrl = studioInfo?.shop_url || "https://shop.tfstudio.website";
 
   return (
-    <section id="featured" className="py-12 bg-background">
+    <section id="featured" className="py-12" style={{ backgroundColor: 'hsl(38 96% 91%)' }}>
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
           <h2 className="text-5xl font-bold mb-8 text-primary">
