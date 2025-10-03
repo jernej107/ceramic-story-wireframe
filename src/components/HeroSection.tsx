@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { useStudioInfo } from "@/lib/hooks/useStudioInfo";
 import { getDirectusImageUrl } from "@/lib/directus";
-import heroImage from "@/assets/hero-ceramics.jpg";
+import heroImage from "@/assets/hero-terracotta-vase.jpg";
+import Navigation from "@/components/Navigation";
 
 const HeroSection = () => {
   const { data: studioInfo, isLoading } = useStudioInfo();
@@ -20,28 +21,35 @@ const HeroSection = () => {
   }
 
   return (
-    <>
-      {/* Mobile Version - Image Background with Overlay */}
-      <section className="lg:hidden relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroImageUrl})` }}
-        >
-          <div className="absolute inset-0 bg-foreground/30"></div>
-        </div>
+    <section className="relative h-screen w-full overflow-hidden">
+      {/* Navigation Overlay */}
+      <Navigation />
+      
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${heroImageUrl})` }}
+      >
+        {/* Dark Overlay for Text Readability */}
+        <div className="absolute inset-0 bg-black/40"></div>
+      </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 container mx-auto px-6 text-center text-white">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl font-bold mb-8 leading-tight text-white">
+      {/* Hero Content */}
+      <div className="relative z-10 h-full flex items-center justify-center">
+        <div className="container mx-auto px-6 text-center">
+          <div className="max-w-5xl mx-auto space-y-8">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-tight text-white uppercase tracking-tight">
               {heroTitle}
             </h1>
-            <p className="text-xl mb-12 max-w-2xl mx-auto leading-relaxed text-white/90">
+            <p className="text-lg md:text-xl lg:text-2xl leading-relaxed text-white/90 max-w-3xl mx-auto">
               {heroDescription}
             </p>
-            <div className="flex flex-col gap-6 justify-center items-center">
-              <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-foreground text-lg px-12 py-6 rounded-full font-medium">
+            <div className="flex justify-center pt-6">
+              <Button 
+                asChild 
+                size="lg" 
+                className="bg-white text-foreground hover:bg-white/90 text-lg px-12 py-6 rounded-full font-medium"
+              >
                 <a href={shopUrl} target="_blank" rel="noopener noreferrer">
                   Visit Shop
                 </a>
@@ -49,40 +57,8 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Desktop Version - Half/Half Layout */}
-      <section className="hidden lg:flex bg-background">
-        <div className="w-full h-full flex">
-          <div className="w-1/2 flex items-center justify-center px-12 bg-background">
-            {/* Text Content - Left Side */}
-            <div className="text-left space-y-8 max-w-lg px-5 py-[45px]">
-              <h1 className="text-6xl xl:text-7xl font-bold leading-tight text-foreground">
-                {heroTitle}
-              </h1>
-              <p className="text-xl xl:text-2xl leading-relaxed text-foreground/80">
-                {heroDescription}
-              </p>
-              <div className="flex gap-6 pt-4">
-                <Button asChild size="lg" variant="outline" className="border-2 border-foreground text-foreground hover:bg-foreground hover:text-background text-lg px-12 py-6 rounded-full font-medium">
-                  <a href={shopUrl} target="_blank" rel="noopener noreferrer">
-                    Visit Shop
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Image - Right Side Full Bleed */}
-          <div className="w-1/2 relative">
-            <div 
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${heroImageUrl})` }}
-            />
-          </div>
-        </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

@@ -1,4 +1,3 @@
-import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import FeaturedCeramics from "@/components/FeaturedCeramics";
 import JournalSection from "@/components/JournalSection";
@@ -9,9 +8,8 @@ import Footer from "@/components/Footer";
 const Index = () => {
   return (
     <>
-      <Navigation />
+      <HeroSection />
       <main>
-        <HeroSection />
         <FeaturedCeramics />
         <JournalSection />
         <AboutSection />
