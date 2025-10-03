@@ -4,24 +4,24 @@ import { Instagram, Mail, MapPin, Phone } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="subtle-gradient border-t border-border/40">
+    <footer className="bg-accent border-t border-primary/20">
       <div className="container mx-auto px-4">
         {/* Newsletter Section */}
-        <div className="py-12 border-b border-border/40">
+        <div className="py-12 border-b border-primary/20">
           <div className="text-center max-w-2xl mx-auto">
-            <h3 className="text-3xl font-bold mb-4 text-foreground">
+            <h3 className="text-3xl font-bold mb-4 text-accent-foreground">
               Stay Connected
             </h3>
-            <p className="text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-foreground/70 mb-8 leading-relaxed">
               Subscribe to our newsletter for studio updates, new collections, and exclusive ceramic insights.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <Input 
                 placeholder="Enter your email" 
-                className="flex-1"
+                className="flex-1 border-primary/30"
                 type="email"
               />
-              <Button variant="default" className="ceramic-shadow">
+              <Button className="bg-[hsl(var(--button-dark))] text-[hsl(var(--button-dark-foreground))] hover:bg-[hsl(var(--button-dark))]/90 ceramic-shadow">
                 Subscribe
               </Button>
             </div>
@@ -34,15 +34,15 @@ const Footer = () => {
             {/* Brand */}
             <div className="lg:col-span-2">
               <h4 className="text-2xl font-bold text-primary mb-4">TFstudio</h4>
-              <p className="text-muted-foreground mb-6 leading-relaxed max-w-md">
+              <p className="text-foreground/70 mb-6 leading-relaxed max-w-md">
                 Handcrafted ceramic art that brings warmth and character to your home. 
                 Each piece tells a story of craftsmanship and creativity.
               </p>
               <div className="flex space-x-4">
-                <Button size="icon" variant="outline" className="hover:bg-primary hover:text-primary-foreground">
+                <Button size="icon" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                   <Instagram size={20} />
                 </Button>
-                <Button size="icon" variant="outline" className="hover:bg-primary hover:text-primary-foreground">
+                <Button size="icon" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                   <Mail size={20} />
                 </Button>
               </div>
@@ -51,7 +51,7 @@ const Footer = () => {
             {/* Quick Links */}
             <div>
               <h5 className="text-lg font-semibold text-foreground mb-4">Quick Links</h5>
-              <ul className="space-y-3 text-muted-foreground">
+              <ul className="space-y-3 text-foreground/70">
                 <li><a href="#featured" className="hover:text-primary ceramic-transition">Featured</a></li>
                 <li><a href="#journal" className="hover:text-primary ceramic-transition">Journal</a></li>
                 <li><a href="#about" className="hover:text-primary ceramic-transition">About</a></li>
@@ -72,7 +72,7 @@ const Footer = () => {
             {/* Contact */}
             <div>
               <h5 className="text-lg font-semibold text-foreground mb-4">Contact</h5>
-              <ul className="space-y-3 text-muted-foreground">
+              <ul className="space-y-3 text-foreground/70">
                 <li className="flex items-center gap-2">
                   <MapPin size={16} />
                   <span className="text-sm">Artisan District</span>
@@ -91,12 +91,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="py-8 border-t border-border/40">
+        <div className="py-8 border-t border-primary/20">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground/70">
               © 2024 TFstudio. All rights reserved.
             </p>
-            <div className="flex gap-6 text-sm text-muted-foreground">
+            <div className="flex gap-6 text-sm text-foreground/70">
               <a href="#" className="hover:text-primary ceramic-transition">Privacy Policy</a>
               <a href="#" className="hover:text-primary ceramic-transition">Terms of Service</a>
             </div>

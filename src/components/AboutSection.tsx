@@ -13,7 +13,7 @@ const AboutSection = () => {
 
   if (isLoading) {
     return (
-      <section className="py-12 ceramic-gradient">
+      <section className="py-12 bg-background">
         <div className="container mx-auto px-4 text-center">
           <div className="animate-pulse text-muted-foreground">Loading...</div>
         </div>
@@ -22,14 +22,14 @@ const AboutSection = () => {
   }
 
   return (
-    <section id="about" className="py-12 ceramic-gradient">
+    <section id="about" className="py-12 bg-background">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="order-2 lg:order-1">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-primary">
               {aboutTitle}
             </h2>
-            <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+            <div className="space-y-6 text-lg text-foreground/70 leading-relaxed">
               <p>{aboutDescription}</p>
               <p>
                 Every piece that emerges from our kilns carries the mark of human hands, the 
@@ -45,12 +45,12 @@ const AboutSection = () => {
             </div>
             <div className="mt-8 grid grid-cols-2 gap-8">
               <div>
-                <h3 className="text-3xl font-bold text-primary mb-2">{piecesCreated}</h3>
-                <p className="text-muted-foreground">Pieces Created</p>
+                <h3 className="text-3xl font-bold text-secondary mb-2">{piecesCreated}</h3>
+                <p className="text-foreground/70">Pieces Created</p>
               </div>
               <div>
-                <h3 className="text-3xl font-bold text-primary mb-2">{yearsExperience}</h3>
-                <p className="text-muted-foreground">Years of Craft</p>
+                <h3 className="text-3xl font-bold text-secondary mb-2">{yearsExperience}</h3>
+                <p className="text-foreground/70">Years of Craft</p>
               </div>
             </div>
           </div>

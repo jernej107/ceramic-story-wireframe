@@ -30,9 +30,9 @@ const SecondChanceCeramics = () => {
           <div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
               Second Chance 
-              <span className="block text-primary">Ceramics</span>
+              <span className="block text-secondary">Ceramics</span>
             </h2>
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-xl text-foreground/70 mb-8 leading-relaxed">
               Discover the beauty in imperfection with our collection of second-chance ceramics. 
               These pieces may have minor flaws, unique variations, or simply need a new home, 
               but they're no less beautiful for it.
@@ -41,14 +41,14 @@ const SecondChanceCeramics = () => {
             <div className="space-y-6 mb-8">
               {features.map((feature, index) => (
                 <div key={index} className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                  <div className="flex-shrink-0 w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center text-secondary">
                     {feature.icon}
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-foreground mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-foreground/70">
                       {feature.description}
                     </p>
                   </div>
@@ -57,19 +57,19 @@ const SecondChanceCeramics = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" variant="default" className="ceramic-shadow">
+              <Button asChild size="lg" className="bg-[hsl(var(--button-dark))] text-[hsl(var(--button-dark-foreground))] hover:bg-[hsl(var(--button-dark))]/90 ceramic-shadow">
                 <a href="https://shop.tfstudio.website" target="_blank" rel="noopener noreferrer">
                   Shop Second Chance
                 </a>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                 <Link to="/second-chance">Learn More</Link>
               </Button>
             </div>
           </div>
 
           <div>
-            <Card className="border-0 ceramic-shadow bg-card/80 backdrop-blur">
+            <Card className="border-2 border-primary/20 ceramic-shadow bg-card/80 backdrop-blur">
               <CardHeader className="pb-4">
                 <img
                   src={secondChanceImage}
@@ -78,10 +78,10 @@ const SecondChanceCeramics = () => {
                 />
               </CardHeader>
               <CardContent>
-                <CardTitle className="text-2xl font-semibold text-card-foreground mb-3">
+                <CardTitle className="text-2xl font-semibold text-primary mb-3">
                   Beauty in Every Imperfection
                 </CardTitle>
-                <CardDescription className="text-muted-foreground leading-relaxed">
+                <CardDescription className="text-foreground/70 leading-relaxed">
                   From slightly asymmetrical bowls to vases with unique color variations, 
                   our second-chance ceramics celebrate the unpredictable nature of the 
                   ceramic process and the beauty that emerges from it.

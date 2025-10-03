@@ -26,10 +26,10 @@ const FeaturedCeramics = () => {
   const shopUrl = studioInfo?.shop_url || "https://shop.tfstudio.website";
 
   return (
-    <section id="featured" className="py-12 bg-white">
+    <section id="featured" className="py-12 bg-accent">
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-5xl font-bold mb-8 text-foreground">
+          <h2 className="text-5xl font-bold mb-8 text-accent-foreground">
             Signature Pieces
           </h2>
         </div>
@@ -67,7 +67,7 @@ const FeaturedCeramics = () => {
               <Button 
                 asChild 
                 size="lg" 
-                className="bg-foreground text-background hover:bg-foreground/90 px-12 py-6 rounded-full text-lg font-medium"
+                className="bg-[hsl(var(--button-dark))] text-[hsl(var(--button-dark-foreground))] hover:bg-[hsl(var(--button-dark))]/90 px-12 py-6 rounded-full text-lg font-medium"
               >
                 <a 
                   href={shopUrl} 
