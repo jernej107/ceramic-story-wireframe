@@ -4,12 +4,6 @@ www.tfstudio.website {
 }
 
 tfstudio.website {
-    # Directus CMS routes (must come first for specific matching)
-    reverse_proxy /admin* tfstudio-directus:8055
-    reverse_proxy /api/* tfstudio-directus:8055
-    reverse_proxy /assets/* tfstudio-directus:8055
-    
-    # React Frontend (default/fallback)
     reverse_proxy tfstudio:80
     
     encode zstd gzip
