@@ -13,7 +13,7 @@ const AboutSection = () => {
 
   if (isLoading) {
     return (
-      <section className="py-12" style={{ backgroundColor: 'hsl(48 100% 82%)' }}>
+      <section className="py-12" style={{ backgroundColor: 'hsl(38 96% 91%)' }}>
         <div className="container mx-auto px-4 text-center">
           <div className="animate-pulse text-muted-foreground">Loading...</div>
         </div>
@@ -22,7 +22,7 @@ const AboutSection = () => {
   }
 
   return (
-    <section id="about" className="py-12" style={{ backgroundColor: 'hsl(48 100% 82%)' }}>
+    <section id="about" className="py-12" style={{ backgroundColor: 'hsl(38 96% 91%)' }}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="order-2 lg:order-1">

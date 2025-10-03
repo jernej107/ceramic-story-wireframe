@@ -4,7 +4,7 @@ import { Instagram, Mail, MapPin, Phone } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-primary/20" style={{ background: 'linear-gradient(180deg, hsl(48 100% 82%), hsl(38 96% 91%))' }}>
+    <footer className="border-t border-primary/20" style={{ background: 'linear-gradient(180deg, hsl(38 96% 91%), hsl(48 100% 82%))' }}>
       <div className="container mx-auto px-4">
         {/* Newsletter Section */}
         <div className="py-12 border-b border-primary/20">

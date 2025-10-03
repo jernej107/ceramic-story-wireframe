@@ -24,15 +24,15 @@ const SecondChanceCeramics = () => {
   ];
 
   return (
-    <section id="second-chance" className="py-12 bg-background">
+    <section id="second-chance" className="py-12" style={{ backgroundColor: 'hsl(21 81% 54%)' }}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
               Second Chance 
-              <span className="block text-secondary">Ceramics</span>
+              <span className="block text-white">Ceramics</span>
             </h2>
-            <p className="text-xl text-foreground/70 mb-8 leading-relaxed">
+            <p className="text-xl text-white/90 mb-8 leading-relaxed">
               Discover the beauty in imperfection with our collection of second-chance ceramics. 
               These pieces may have minor flaws, unique variations, or simply need a new home, 
               but they're no less beautiful for it.
@@ -41,14 +41,14 @@ const SecondChanceCeramics = () => {
             <div className="space-y-6 mb-8">
               {features.map((feature, index) => (
                 <div key={index} className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center text-secondary">
+                  <div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-white">
                     {feature.icon}
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">
+                    <h3 className="text-lg font-semibold text-white mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-foreground/70">
+                    <p className="text-white/90">
                       {feature.description}
                     </p>
                   </div>
@@ -62,7 +62,7 @@ const SecondChanceCeramics = () => {
                   Shop Second Chance
                 </a>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-secondary">
                 <Link to="/second-chance">Learn More</Link>
               </Button>
             </div>
