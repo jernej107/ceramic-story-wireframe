@@ -13,7 +13,7 @@ const AboutSection = () => {
 
   if (isLoading) {
     return (
-      <section className="py-12" style={{ backgroundColor: 'hsl(38 96% 91%)' }}>
+      <section className="py-12 ceramic-gradient">
         <div className="container mx-auto px-4 text-center">
           <div className="animate-pulse text-muted-foreground">Loading...</div>
         </div>
@@ -22,14 +22,14 @@ const AboutSection = () => {
   }
 
   return (
-    <section id="about" className="py-12" style={{ backgroundColor: 'hsl(38 96% 91%)' }}>
+    <section id="about" className="py-12 ceramic-gradient">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="order-2 lg:order-1">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: 'hsl(21 81% 54%)' }}>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
               {aboutTitle}
             </h2>
-            <div className="space-y-6 text-lg leading-relaxed" style={{ color: 'hsl(21 81% 54%)' }}>
+            <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
               <p>{aboutDescription}</p>
               <p>
                 Every piece that emerges from our kilns carries the mark of human hands, the 
@@ -45,12 +45,12 @@ const AboutSection = () => {
             </div>
             <div className="mt-8 grid grid-cols-2 gap-8">
               <div>
-                <h3 className="text-3xl font-bold mb-2" style={{ color: 'hsl(21 81% 54%)' }}>{piecesCreated}</h3>
-                <p style={{ color: 'hsl(21 81% 54%)' }}>Pieces Created</p>
+                <h3 className="text-3xl font-bold text-primary mb-2">{piecesCreated}</h3>
+                <p className="text-muted-foreground">Pieces Created</p>
               </div>
               <div>
-                <h3 className="text-3xl font-bold mb-2" style={{ color: 'hsl(21 81% 54%)' }}>{yearsExperience}</h3>
-                <p style={{ color: 'hsl(21 81% 54%)' }}>Years of Craft</p>
+                <h3 className="text-3xl font-bold text-primary mb-2">{yearsExperience}</h3>
+                <p className="text-muted-foreground">Years of Craft</p>
               </div>
             </div>
           </div>

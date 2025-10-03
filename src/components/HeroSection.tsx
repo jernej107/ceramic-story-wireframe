@@ -21,25 +21,27 @@ const HeroSection = () => {
 
   return (
     <>
-      {/* Mobile Version */}
-      <section className="lg:hidden relative min-h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: '#d4978f' }}>
-        {/* Background Image with Overlay */}
+      {/* Mobile Version - Image Background with Overlay */}
+      <section className="lg:hidden relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroImageUrl})` }}
-        />
-        
+        >
+          <div className="absolute inset-0 bg-foreground/30"></div>
+        </div>
+
         {/* Hero Content */}
-        <div className="relative z-10 container mx-auto px-6 text-center">
+        <div className="relative z-10 container mx-auto px-6 text-center text-white">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-7xl sm:text-8xl font-bold mb-8 leading-none text-white uppercase tracking-tight">
+            <h1 className="text-5xl font-bold mb-8 leading-tight text-white">
               {heroTitle}
             </h1>
             <p className="text-xl mb-12 max-w-2xl mx-auto leading-relaxed text-white/90">
               {heroDescription}
             </p>
             <div className="flex flex-col gap-6 justify-center items-center">
-              <Button asChild size="lg" className="bg-[hsl(var(--button-dark))] text-[hsl(var(--button-dark-foreground))] hover:bg-[hsl(var(--button-dark))]/90 text-lg px-12 py-6 rounded-full font-medium">
+              <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-foreground text-lg px-12 py-6 rounded-full font-medium">
                 <a href={shopUrl} target="_blank" rel="noopener noreferrer">
                   Visit Shop
                 </a>
@@ -49,30 +51,34 @@ const HeroSection = () => {
         </div>
       </section>
 
-      {/* Desktop Version - Editorial Style with Overlay */}
-      <section className="hidden lg:flex relative min-h-screen overflow-hidden" style={{ backgroundColor: '#d4978f' }}>
-        {/* Background Image with Overlay Effect */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
-          style={{ backgroundImage: `url(${heroImageUrl})` }}
-        />
-        
-        {/* Large Typography Overlay */}
-        <div className="relative z-10 w-full flex items-center justify-center px-12">
-          <div className="text-center space-y-12 max-w-5xl">
-            <h1 className="text-[10rem] xl:text-[12rem] font-bold leading-none text-white uppercase tracking-tighter">
-              {heroTitle}
-            </h1>
-            <p className="text-2xl xl:text-3xl leading-relaxed text-white/90 max-w-3xl mx-auto">
-              {heroDescription}
-            </p>
-            <div className="flex gap-6 justify-center pt-8">
-              <Button asChild size="lg" className="bg-white text-[#d4978f] hover:bg-white/90 text-lg px-12 py-6 rounded-full font-medium">
-                <a href={shopUrl} target="_blank" rel="noopener noreferrer">
-                  Visit Shop
-                </a>
-              </Button>
+      {/* Desktop Version - Half/Half Layout */}
+      <section className="hidden lg:flex bg-background">
+        <div className="w-full h-full flex">
+          <div className="w-1/2 flex items-center justify-center px-12 bg-background">
+            {/* Text Content - Left Side */}
+            <div className="text-left space-y-8 max-w-lg px-5 py-[45px]">
+              <h1 className="text-6xl xl:text-7xl font-bold leading-tight text-foreground">
+                {heroTitle}
+              </h1>
+              <p className="text-xl xl:text-2xl leading-relaxed text-foreground/80">
+                {heroDescription}
+              </p>
+              <div className="flex gap-6 pt-4">
+                <Button asChild size="lg" variant="outline" className="border-2 border-foreground text-foreground hover:bg-foreground hover:text-background text-lg px-12 py-6 rounded-full font-medium">
+                  <a href={shopUrl} target="_blank" rel="noopener noreferrer">
+                    Visit Shop
+                  </a>
+                </Button>
+              </div>
             </div>
+          </div>
+
+          {/* Image - Right Side Full Bleed */}
+          <div className="w-1/2 relative">
+            <div 
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url(${heroImageUrl})` }}
+            />
           </div>
         </div>
       </section>

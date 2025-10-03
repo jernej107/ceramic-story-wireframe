@@ -43,13 +43,13 @@ const JournalSection = () => {
     : fallbackPosts;
 
   return (
-    <section id="journal" className="py-12" style={{ backgroundColor: '#feafb0' }}>
+    <section id="journal" className="py-12 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-5xl font-bold mb-8 text-accent-foreground">
+          <h2 className="text-5xl font-bold mb-8 text-foreground">
             Studio Journal
           </h2>
-          <p className="text-xl text-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-foreground/70 max-w-3xl mx-auto leading-relaxed">
             Stories from the studio, insights into our ceramic process, and reflections 
             on the art of handmade pottery.
           </p>
@@ -62,7 +62,7 @@ const JournalSection = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {displayPosts.map((post, index) => (
-            <Card key={index} className="group hover:-translate-y-2 transition-all duration-300 border-0 bg-background shadow-lg hover:shadow-xl rounded-3xl overflow-hidden">
+            <Card key={index} className="group hover:-translate-y-2 transition-all duration-300 border-0 bg-white shadow-lg hover:shadow-xl rounded-3xl overflow-hidden">
               <CardHeader className="p-8">
                 <div className="flex items-center gap-2 text-sm text-foreground/60 mb-4">
                   <Calendar size={16} />
@@ -70,7 +70,7 @@ const JournalSection = () => {
                   <Clock size={16} />
                   <span>{post.readTime}</span>
                 </div>
-                <span className="inline-block px-4 py-2 bg-primary/10 text-primary text-xs font-bold rounded-full w-fit mb-4 uppercase tracking-wide">
+                <span className="inline-block px-4 py-2 bg-foreground/10 text-foreground text-xs font-bold rounded-full w-fit mb-4 uppercase tracking-wide">
                   {post.category}
                 </span>
                 <CardTitle className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
@@ -92,7 +92,7 @@ const JournalSection = () => {
         )}
 
         <div className="text-center">
-          <Button asChild size="lg" className="bg-[hsl(var(--button-dark))] text-[hsl(var(--button-dark-foreground))] hover:bg-[hsl(var(--button-dark))]/90 px-12 py-6 rounded-full text-lg font-medium">
+          <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/90 px-12 py-6 rounded-full text-lg font-medium">
             <Link to="/journal">View All Posts</Link>
           </Button>
         </div>
