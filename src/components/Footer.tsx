@@ -4,15 +4,15 @@ import { Instagram, Mail, MapPin, Phone } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-accent border-t border-primary/20">
+    <footer className="border-t border-primary/20" style={{ background: 'linear-gradient(180deg, hsl(48 100% 82%), hsl(38 96% 91%))' }}>
       <div className="container mx-auto px-4">
         {/* Newsletter Section */}
         <div className="py-12 border-b border-primary/20">
           <div className="text-center max-w-2xl mx-auto">
-            <h3 className="text-3xl font-bold mb-4 text-accent-foreground">
+            <h3 className="text-3xl font-bold mb-4 text-primary">
               Stay Connected
             </h3>
-            <p className="text-foreground/70 mb-8 leading-relaxed">
+            <p className="text-foreground mb-8 leading-relaxed">
               Subscribe to our newsletter for studio updates, new collections, and exclusive ceramic insights.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
@@ -34,7 +34,7 @@ const Footer = () => {
             {/* Brand */}
             <div className="lg:col-span-2">
               <h4 className="text-2xl font-bold text-primary mb-4">TFstudio</h4>
-              <p className="text-foreground/70 mb-6 leading-relaxed max-w-md">
+              <p className="text-foreground mb-6 leading-relaxed max-w-md">
                 Handcrafted ceramic art that brings warmth and character to your home. 
                 Each piece tells a story of craftsmanship and creativity.
               </p>
@@ -51,7 +51,7 @@ const Footer = () => {
             {/* Quick Links */}
             <div>
               <h5 className="text-lg font-semibold text-foreground mb-4">Quick Links</h5>
-              <ul className="space-y-3 text-foreground/70">
+              <ul className="space-y-3 text-foreground">
                 <li><a href="#featured" className="hover:text-primary ceramic-transition">Featured</a></li>
                 <li><a href="#journal" className="hover:text-primary ceramic-transition">Journal</a></li>
                 <li><a href="#about" className="hover:text-primary ceramic-transition">About</a></li>
@@ -72,7 +72,7 @@ const Footer = () => {
             {/* Contact */}
             <div>
               <h5 className="text-lg font-semibold text-foreground mb-4">Contact</h5>
-              <ul className="space-y-3 text-foreground/70">
+              <ul className="space-y-3 text-foreground">
                 <li className="flex items-center gap-2">
                   <MapPin size={16} />
                   <span className="text-sm">Artisan District</span>
@@ -93,10 +93,10 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="py-8 border-t border-primary/20">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-foreground/70">
+            <p className="text-sm text-foreground">
               © 2024 TFstudio. All rights reserved.
             </p>
-            <div className="flex gap-6 text-sm text-foreground/70">
+            <div className="flex gap-6 text-sm text-foreground">
               <a href="#" className="hover:text-primary ceramic-transition">Privacy Policy</a>
               <a href="#" className="hover:text-primary ceramic-transition">Terms of Service</a>
             </div>

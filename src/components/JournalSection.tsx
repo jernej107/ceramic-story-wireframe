@@ -49,7 +49,7 @@ const JournalSection = () => {
           <h2 className="text-5xl font-bold mb-8 text-accent-foreground">
             Studio Journal
           </h2>
-          <p className="text-xl text-foreground/70 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-foreground max-w-3xl mx-auto leading-relaxed">
             Stories from the studio, insights into our ceramic process, and reflections 
             on the art of handmade pottery.
           </p>

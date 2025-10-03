@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* New Color Palette - Blue, Orange, Creme, Black */
+    /* New Color Palette - Blue, Orange, Creme, Black, Rose */
     --background: 0 0% 100%; /* White background for header */
     --foreground: 0 0% 11%; /* 1d1d1d - Black text */
 
@@ -33,6 +33,10 @@ All colors MUST be HSL.
     --accent: 38 96% 91%; /* feedd0 - Creme */
     --accent-foreground: 217 91% 60%; /* Blue text on creme */
 
+    /* Rose for About section */
+    --rose: 48 100% 82%; /* feafb0 - Rose */
+    --rose-foreground: 21 81% 54%; /* Orange text on rose */
+
     /* Orange for Hero */
     --hero: 21 81% 54%; /* e8692c - Orange */
     --hero-foreground: 38 96% 91%; /* Creme text */
@@ -54,6 +58,7 @@ All colors MUST be HSL.
     --gradient-hero: linear-gradient(135deg, hsl(21 81% 54%), hsl(21 81% 64%));
     --gradient-subtle: linear-gradient(180deg, hsl(38 96% 91%), hsl(38 96% 95%));
     --gradient-ceramic: linear-gradient(45deg, hsl(217 91% 60%), hsl(217 91% 70%));
+    --gradient-footer: linear-gradient(180deg, hsl(48 100% 82%), hsl(38 96% 91%));
 
     /* Updated Shadows */
     --shadow-ceramic: 0 10px 30px -10px hsl(0 0% 11% / 0.15);

@@ -26,10 +26,10 @@ const FeaturedCeramics = () => {
   const shopUrl = studioInfo?.shop_url || "https://shop.tfstudio.website";
 
   return (
-    <section id="featured" className="py-12 bg-accent">
+    <section id="featured" className="py-12 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-5xl font-bold mb-8 text-accent-foreground">
+          <h2 className="text-5xl font-bold mb-8 text-primary">
             Signature Pieces
           </h2>
         </div>
@@ -43,7 +43,7 @@ const FeaturedCeramics = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               {displayCollections.map((collection, index) => (
                 <div key={index} className="group cursor-pointer">
-                  <div className="bg-white rounded-3xl border-2 border-[#1d1d1d] shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                  <div className="bg-white rounded-3xl border-2 border-primary shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                     <div className="p-[10px]">
                       <div 
                         className="aspect-[4/3] bg-cover bg-center rounded-2xl relative overflow-hidden"
