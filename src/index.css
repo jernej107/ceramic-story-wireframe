@@ -9,7 +9,7 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* SEO-Optimized Color Palette */
-    --background: 27 31% 92%; /* f0eae5 - Light cream for readability */
+    --background: 0 0% 96%; /* f5f5f5 - Light grey */
     --foreground: 60 4% 11%; /* 1d1d1b - All text unified */
 
     --card: 27 31% 96%;
