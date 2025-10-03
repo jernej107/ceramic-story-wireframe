@@ -43,7 +43,7 @@ const JournalSection = () => {
     : fallbackPosts;
 
   return (
-    <section id="journal" className="py-12" style={{ backgroundColor: 'hsl(48 100% 82%)' }}>
+    <section id="journal" className="py-12" style={{ backgroundColor: '#feafb0' }}>
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
           <h2 className="text-5xl font-bold mb-8 text-accent-foreground">
