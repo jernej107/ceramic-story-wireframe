@@ -1,19 +1,25 @@
-# Redirect www → apex
 www.tfstudio.website {
     redir https://tfstudio.website{uri} permanent
 }
 
 tfstudio.website {
+  encode zstd gzip
+  handle {
     reverse_proxy tfstudio:80
-    
-    encode zstd gzip
-    
-    # Security headers
-    header {
-        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-        X-Content-Type-Options "nosniff"
-        X-Frame-Options "SAMEORIGIN"
-        Referrer-Policy "no-referrer-when-downgrade"
-    }
+  }
+  # Optional access logs:
+  # log {
+  #   output stdout
+  #   format console
+  # }
 }
 
+cms.tfstudio.website {
+  encode zstd gzip
+  reverse_proxy directus-cms:8055
+  # Optional access logs:
+  # log {
+  #   output stdout
+  #   format console
+  # }
+}
