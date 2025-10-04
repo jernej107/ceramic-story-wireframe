@@ -67,12 +67,12 @@ const SecondChanceCeramics = () => {
             </div>
           </div>
 
-          <div>
-            <div className="bg-white rounded-3xl overflow-hidden shadow-lg h-full flex items-center justify-center p-12">
+          <div className="h-full">
+            <div className="bg-white h-full flex items-center justify-center">
               <img
                 src={secondChanceImage}
                 alt="Collection of unique second chance ceramics"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
