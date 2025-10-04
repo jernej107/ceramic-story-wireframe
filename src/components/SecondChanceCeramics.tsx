@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, Recycle, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import secondChanceImage from "@/assets/second-chance-ceramics.jpg";
+import secondChanceImage from "@/assets/second_chance.png";
 
 const SecondChanceCeramics = () => {
   const features = [
@@ -68,25 +68,25 @@ const SecondChanceCeramics = () => {
           </div>
 
           <div>
-            <Card className="border-0 shadow-lg bg-card rounded-3xl overflow-hidden">
-              <CardHeader className="p-0">
+            <div className="bg-white rounded-3xl overflow-hidden shadow-lg">
+              <div className="aspect-square bg-white flex items-center justify-center p-12">
                 <img
                   src={secondChanceImage}
                   alt="Collection of unique second chance ceramics"
-                  className="w-full h-96 object-cover"
+                  className="w-full h-full object-contain"
                 />
-              </CardHeader>
-              <CardContent className="p-8">
-                <CardTitle className="text-2xl font-bold text-foreground mb-4">
+              </div>
+              <div className="p-8 bg-white">
+                <h3 className="text-2xl font-bold text-foreground mb-4">
                   Beauty in Every Imperfection
-                </CardTitle>
-                <CardDescription className="text-foreground/70 leading-relaxed text-base">
+                </h3>
+                <p className="text-foreground/70 leading-relaxed text-base">
                   From slightly asymmetrical bowls to vases with unique color variations, 
                   our second-chance ceramics celebrate the unpredictable nature of the 
                   ceramic process and the beauty that emerges from it.
-                </CardDescription>
-              </CardContent>
-            </Card>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

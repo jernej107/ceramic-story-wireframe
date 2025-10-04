@@ -28,7 +28,7 @@ const Navigation = () => {
         <div className="flex h-24 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img src={logo} alt="TFStudio Logo" className={`h-16 w-16 hover:opacity-80 ceramic-transition ${logoClasses}`} />
+            <img src={logo} alt="TFStudio Logo" className="h-20 w-auto hover:opacity-80 ceramic-transition" />
           </Link>
 
           {/* Desktop Navigation */}

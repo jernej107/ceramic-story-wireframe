@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useStudioInfo } from "@/lib/hooks/useStudioInfo";
 import { getDirectusImageUrl } from "@/lib/directus";
-import heroImage from "@/assets/hero-terracotta-vase.jpg";
+import heroImage from "@/assets/hero.jpg";
 import Navigation from "@/components/Navigation";
 
 const HeroSection = () => {
@@ -21,30 +21,22 @@ const HeroSection = () => {
   }
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
+    <section className="relative min-h-screen w-full bg-background">
       {/* Navigation Overlay */}
       <Navigation />
       
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroImageUrl})` }}
-      >
-        {/* Dark Overlay for Text Readability */}
-        <div className="absolute inset-0 bg-black/40"></div>
-      </div>
-
-      {/* Hero Content */}
-      <div className="relative z-10 h-full flex items-center justify-center">
-        <div className="container mx-auto px-6 text-center">
-          <div className="max-w-5xl mx-auto space-y-8">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-tight text-white uppercase tracking-wide">
+      {/* Hero Content - Two Column Layout */}
+      <div className="container mx-auto px-6 pt-32 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-8rem)]">
+          {/* Left Column - Text Content */}
+          <div className="space-y-6 lg:pr-12">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight text-foreground uppercase tracking-wide font-display">
               {heroTitle}
             </h1>
-            <p className="text-base md:text-lg lg:text-xl leading-relaxed text-white/90 max-w-2xl mx-auto font-medium">
+            <p className="text-base md:text-lg leading-relaxed text-foreground/80 font-body">
               {heroDescription}
             </p>
-            <div className="flex justify-center pt-6">
+            <div className="pt-4">
               <Button 
                 asChild 
                 size="lg" 
@@ -55,6 +47,15 @@ const HeroSection = () => {
                 </a>
               </Button>
             </div>
+          </div>
+
+          {/* Right Column - Image */}
+          <div className="flex items-center justify-center">
+            <img 
+              src={heroImageUrl} 
+              alt="Handcrafted ceramic piece" 
+              className="w-full max-w-xl h-auto object-contain"
+            />
           </div>
         </div>
       </div>
