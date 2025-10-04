@@ -68,24 +68,12 @@ const SecondChanceCeramics = () => {
           </div>
 
           <div>
-            <div className="bg-white rounded-3xl overflow-hidden shadow-lg">
-              <div className="aspect-square bg-white flex items-center justify-center p-12">
-                <img
-                  src={secondChanceImage}
-                  alt="Collection of unique second chance ceramics"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div className="p-8 bg-white">
-                <h3 className="text-2xl font-bold text-foreground mb-4">
-                  Beauty in Every Imperfection
-                </h3>
-                <p className="text-foreground/70 leading-relaxed text-base">
-                  From slightly asymmetrical bowls to vases with unique color variations, 
-                  our second-chance ceramics celebrate the unpredictable nature of the 
-                  ceramic process and the beauty that emerges from it.
-                </p>
-              </div>
+            <div className="bg-white rounded-3xl overflow-hidden shadow-lg h-full flex items-center justify-center p-12">
+              <img
+                src={secondChanceImage}
+                alt="Collection of unique second chance ceramics"
+                className="w-full h-full object-contain"
+              />
             </div>
           </div>
         </div>
