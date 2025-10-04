@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useStudioInfo } from "@/lib/hooks/useStudioInfo";
 import { getDirectusImageUrl } from "@/lib/directus";
-import heroImage from "@/assets/hero.jpg";
+import heroImage from "@/assets/hero-ceramic.png";
 import Navigation from "@/components/Navigation";
 
 const HeroSection = () => {
