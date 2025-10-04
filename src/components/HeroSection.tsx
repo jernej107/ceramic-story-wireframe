@@ -27,9 +27,9 @@ const HeroSection = () => {
       
       {/* Hero Content - Two Column Layout */}
       <div className="container mx-auto px-6 pt-32 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-8rem)]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch min-h-[calc(100vh-8rem)]">
           {/* Left Column - Text Content */}
-          <div className="space-y-6 lg:pr-12">
+          <div className="space-y-6 lg:pr-12 flex flex-col justify-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight text-foreground uppercase tracking-wide font-display">
               {heroTitle}
             </h1>
@@ -50,11 +50,11 @@ const HeroSection = () => {
           </div>
 
           {/* Right Column - Image */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-stretch">
             <img 
               src={heroImageUrl} 
               alt="Handcrafted ceramic piece" 
-              className="w-full max-w-xl h-auto object-contain"
+              className="w-full h-full object-cover"
             />
           </div>
         </div>
