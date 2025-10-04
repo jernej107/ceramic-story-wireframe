@@ -38,17 +38,17 @@ const HeroSection = () => {
       <div className="relative z-10 h-full flex items-center justify-center">
         <div className="container mx-auto px-6 text-center">
           <div className="max-w-5xl mx-auto space-y-8">
-            <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-tight text-white uppercase tracking-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-tight text-white uppercase tracking-wide">
               {heroTitle}
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl leading-relaxed text-white/90 max-w-3xl mx-auto">
+            <p className="text-base md:text-lg lg:text-xl leading-relaxed text-white/90 max-w-2xl mx-auto font-medium">
               {heroDescription}
             </p>
             <div className="flex justify-center pt-6">
               <Button 
                 asChild 
                 size="lg" 
-                className="bg-white text-foreground hover:bg-white/90 text-lg px-12 py-6 rounded-full font-medium"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 text-base px-10 py-6 rounded-full font-bold uppercase tracking-wide"
               >
                 <a href={shopUrl} target="_blank" rel="noopener noreferrer">
                   Visit Shop

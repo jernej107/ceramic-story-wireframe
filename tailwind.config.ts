@@ -59,9 +59,10 @@ export default {
         },
       },
       fontFamily: {
-        'alan': ['Alan Sans', 'sans-serif'],
-        'display': ['Alan Sans', 'sans-serif'],
-        'body': ['Alan Sans', 'sans-serif'],
+        'montserrat': ['Montserrat', 'sans-serif'],
+        'montserrat-alt': ['Montserrat Alternates', 'sans-serif'],
+        'display': ['Montserrat Alternates', 'sans-serif'],
+        'body': ['Montserrat', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

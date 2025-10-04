@@ -8,117 +8,117 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* SEO-Optimized Color Palette */
-    --background: 0 0% 96%; /* f5f5f5 - Light grey */
-    --foreground: 60 4% 11%; /* 1d1d1b - All text unified */
+    /* Modern Blue & Beige Color Palette */
+    --background: 0 0% 100%; /* White background */
+    --foreground: 0 0% 0%; /* Black text */
 
-    --card: 27 31% 96%;
-    --card-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
+    --card: 35 20% 88%; /* Beige card background - #e3ddd5 */
+    --card-foreground: 0 0% 0%; /* Black text */
 
-    --popover: 27 31% 92%;
-    --popover-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
 
-    /* Sage Primary */
-    --primary: 49 11% 60%; /* a39f8e - Sage as primary */
-    --primary-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
+    /* Blue Primary */
+    --primary: 224 100% 58%; /* Bright blue - #3366FF */
+    --primary-foreground: 0 0% 100%; /* White text on blue */
 
-    /* Sage Secondary */
-    --secondary: 49 11% 60%; /* a39f8e - Subtle complement */
-    --secondary-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
+    /* Beige Secondary */
+    --secondary: 35 20% 88%; /* Beige - #e3ddd5 */
+    --secondary-foreground: 0 0% 0%; /* Black text */
 
-    --muted: 49 11% 65%;
-    --muted-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
 
-    /* Sage Accent */
-    --accent: 49 11% 65%;
-    --accent-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
+    /* Blue Accent */
+    --accent: 224 100% 58%; /* Bright blue */
+    --accent-foreground: 0 0% 100%;
 
-    /* Warm Peach for Collections */
-    --collections: 18 62% 75%; /* e7b099 - Warm section background */
-    --collections-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
+    /* Warm Beige for Collections */
+    --collections: 35 20% 88%; /* Beige section background */
+    --collections-foreground: 0 0% 0%;
 
-    --destructive: 0 75% 55%;
-    --destructive-foreground: 60 4% 11%; /* 1d1d1b - All text unified */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 49 11% 80%;
-    --input: 49 11% 80%;
-    --ring: 49 11% 60%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 224 100% 58%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
     /* Updated Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(49 11% 60%), hsl(18 62% 75%));
-    --gradient-subtle: linear-gradient(180deg, hsl(27 31% 92%), hsl(18 62% 75%));
-    --gradient-ceramic: linear-gradient(45deg, hsl(18 62% 75%), hsl(49 11% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%), hsl(0 0% 98%));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 98%));
+    --gradient-ceramic: linear-gradient(45deg, hsl(35 20% 88%), hsl(35 25% 90%));
 
     /* Updated Shadows */
-    --shadow-ceramic: 0 10px 30px -10px hsl(60 4% 11% / 0.2);
-    --shadow-soft: 0 4px 16px -4px hsl(60 4% 11% / 0.1);
+    --shadow-ceramic: 0 10px 30px -10px hsl(0 0% 0% / 0.1);
+    --shadow-soft: 0 4px 16px -4px hsl(0 0% 0% / 0.08);
 
     /* Transitions */
     --transition-ceramic: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Typography */
-    --font-display: 'Alan Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-body: 'Alan Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Montserrat Alternates', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
 
-    --sidebar-background: 27 31% 95%;
-    --sidebar-foreground: 60 4% 11%;
-    --sidebar-primary: 49 11% 60%;
-    --sidebar-primary-foreground: 60 4% 11%;
-    --sidebar-accent: 49 11% 65%;
-    --sidebar-accent-foreground: 60 4% 11%;
-    --sidebar-border: 49 11% 80%;
-    --sidebar-ring: 49 11% 60%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 0%;
+    --sidebar-primary: 224 100% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 35 20% 88%;
+    --sidebar-accent-foreground: 0 0% 0%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 224 100% 58%;
   }
 
   .dark {
-    --background: 60 4% 8%;
-    --foreground: 27 31% 95%;
+    --background: 0 0% 10%;
+    --foreground: 0 0% 98%;
 
-    --card: 60 4% 12%;
-    --card-foreground: 27 31% 95%;
+    --card: 35 20% 20%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 60 4% 12%;
-    --popover-foreground: 27 31% 95%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 49 11% 40%;
-    --primary-foreground: 27 31% 95%;
+    --primary: 224 100% 58%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 49 11% 25%;
-    --secondary-foreground: 27 31% 90%;
+    --secondary: 35 20% 25%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 60 4% 15%;
-    --muted-foreground: 49 11% 65%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 49 11% 25%;
-    --accent-foreground: 27 31% 90%;
+    --accent: 224 100% 58%;
+    --accent-foreground: 0 0% 100%;
 
-    --collections: 18 62% 35%;
-    --collections-foreground: 27 31% 95%;
+    --collections: 35 20% 25%;
+    --collections-foreground: 0 0% 98%;
 
-    --destructive: 0 75% 60%;
-    --destructive-foreground: 60 4% 8%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 60 4% 18%;
-    --input: 60 4% 18%;
-    --ring: 49 11% 40%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 224 100% 58%;
 
-    --gradient-hero: linear-gradient(135deg, hsl(49 11% 40%), hsl(18 62% 35%));
-    --gradient-subtle: linear-gradient(180deg, hsl(60 4% 8%), hsl(18 62% 35%));
-    --gradient-ceramic: linear-gradient(45deg, hsl(18 62% 35%), hsl(49 11% 25%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 10%), hsl(0 0% 12%));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 10%), hsl(0 0% 12%));
+    --gradient-ceramic: linear-gradient(45deg, hsl(35 20% 20%), hsl(35 25% 22%));
 
-    --shadow-ceramic: 0 10px 30px -10px hsl(0 0% 0% / 0.3);
-    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.2);
+    --shadow-ceramic: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
 
-    --sidebar-background: 60 4% 10%;
-    --sidebar-foreground: 27 31% 90%;
-    --sidebar-primary: 49 11% 40%;
-    --sidebar-primary-foreground: 27 31% 95%;
-    --sidebar-accent: 49 11% 25%;
-    --sidebar-accent-foreground: 27 31% 90%;
-    --sidebar-border: 60 4% 18%;
-    --sidebar-ring: 49 11% 40%;
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 224 100% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 35 20% 25%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 224 100% 58%;
   }
 }
 

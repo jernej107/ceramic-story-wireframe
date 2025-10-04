@@ -24,31 +24,30 @@ const SecondChanceCeramics = () => {
   ];
 
   return (
-    <section id="second-chance" className="py-12 bg-background">
-      <div className="container mx-auto px-4">
+    <section id="second-chance" className="py-20 bg-white">
+      <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              Second Chance 
-              <span className="block text-primary">Ceramics</span>
+            <h2 className="text-5xl md:text-6xl font-bold mb-8 text-primary leading-tight">
+              Second chance Ceramics
             </h2>
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-lg text-foreground/70 mb-10 leading-relaxed">
               Discover the beauty in imperfection with our collection of second-chance ceramics. 
               These pieces may have minor flaws, unique variations, or simply need a new home, 
               but they're no less beautiful for it.
             </p>
 
-            <div className="space-y-6 mb-8">
+            <div className="space-y-6 mb-10">
               {features.map((feature, index) => (
                 <div key={index} className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                  <div className="flex-shrink-0 w-12 h-12 bg-card rounded-full flex items-center justify-center text-foreground">
                     {feature.icon}
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">
+                    <h3 className="text-lg font-bold text-foreground mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-foreground/70 leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
@@ -57,31 +56,31 @@ const SecondChanceCeramics = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" variant="default" className="ceramic-shadow">
+              <Button asChild size="lg" className="rounded-full px-10 py-6">
                 <a href="https://shop.tfstudio.website" target="_blank" rel="noopener noreferrer">
                   Shop Second Chance
                 </a>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="outline" className="rounded-full px-10 py-6">
                 <Link to="/second-chance">Learn More</Link>
               </Button>
             </div>
           </div>
 
           <div>
-            <Card className="border-0 ceramic-shadow bg-card/80 backdrop-blur">
-              <CardHeader className="pb-4">
+            <Card className="border-0 shadow-lg bg-card rounded-3xl overflow-hidden">
+              <CardHeader className="p-0">
                 <img
                   src={secondChanceImage}
                   alt="Collection of unique second chance ceramics"
-                  className="w-full h-80 object-cover rounded-lg"
+                  className="w-full h-96 object-cover"
                 />
               </CardHeader>
-              <CardContent>
-                <CardTitle className="text-2xl font-semibold text-card-foreground mb-3">
+              <CardContent className="p-8">
+                <CardTitle className="text-2xl font-bold text-foreground mb-4">
                   Beauty in Every Imperfection
                 </CardTitle>
-                <CardDescription className="text-muted-foreground leading-relaxed">
+                <CardDescription className="text-foreground/70 leading-relaxed text-base">
                   From slightly asymmetrical bowls to vases with unique color variations, 
                   our second-chance ceramics celebrate the unpredictable nature of the 
                   ceramic process and the beauty that emerges from it.
